@@ -128,15 +128,19 @@ input:focus, textarea:focus { outline: none; border-color: #a8a8a8; background: 
 .footer { text-align: center; color: var(--muted); padding: 32px 16px 80px; font-size: 12px; }
 .empty { text-align: center; color: var(--muted); padding: 32px 12px; }
 
-/* Bottom nav mobile ala IG */
-.bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 10px 0; justify-content: space-around; z-index: 10; }
-.bottom-nav a svg { width: 26px; height: 26px; }
+/* Bottom nav pill mengambang ala IG (seperti di gambar: putih, rounded, 5 ikon) */
+.bottom-nav { display: flex; position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #e5e5e5; border-radius: 999px; box-shadow: 0 6px 24px rgba(0,0,0,.16); padding: 10px 26px; gap: 34px; align-items: center; z-index: 20; width: max-content; max-width: calc(100vw - 32px); }
+.bottom-nav-item { display: inline-flex; align-items: center; justify-content: center; color: var(--text); line-height: 0; }
+.bottom-nav-item svg { display: block; }
+main.container { padding-bottom: 90px; }
 @media (max-width: 720px) {
-  .topbar-search { display: none; }
+  .topbar-search { max-width: 160px; }
+  .logo { font-size: 20px; }
+  .topbar-inner { padding: 0 12px; gap: 10px; }
 }
 @media (max-width: 560px) {
-  .bottom-nav { display: flex; }
   .topbar .nav { display: none; }
+  .bottom-nav { gap: 26px; padding: 10px 22px; bottom: 14px; }
   .profile-head { gap: 16px; padding: 16px 8px; }
   .avatar.lg { width: 64px; height: 64px; font-size: 26px; }
 }
