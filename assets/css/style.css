@@ -119,13 +119,17 @@ input:focus, textarea:focus { outline: none; border-color: #a8a8a8; background: 
 .stat b { font-size: 32px; display: block; color: var(--primary); }
 .stat span { color: var(--muted); font-size: 14px; }
 .table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.table th, .table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+/* Tabel admin di HP: jangan dipaksa muat — beri lebar minimum & scroll horizontal di dalam kartu */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrap .table { min-width: 620px; }
+.table th, .table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: top; white-space: normal; }
 .table th { color: var(--muted); }
+.table td .btn { white-space: nowrap; }
 .admin-tabs { display: flex; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
 .admin-tabs a { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: var(--text); font-weight: 600; }
 .admin-tabs a.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-.footer { text-align: center; color: var(--muted); padding: 32px 16px 80px; font-size: 12px; }
+.footer { text-align: center; color: var(--muted); padding: 32px 16px 130px; font-size: 12px; }
 .empty { text-align: center; color: var(--muted); padding: 32px 12px; }
 
 /* Bottom nav pill mengambang ala IG (seperti di gambar: putih, rounded, 5 ikon) */
@@ -141,6 +145,14 @@ main.container { padding-bottom: 90px; }
 @media (max-width: 560px) {
   .topbar .nav { display: none; }
   .bottom-nav { gap: 26px; padding: 10px 22px; bottom: 14px; }
+  .admin-tabs { gap: 6px; }
+  .admin-tabs a { padding: 7px 12px; font-size: 13px; }
+  .stats { gap: 10px; }
+  .card.pad { padding: 12px; }
+  .admin-tabs a { white-space: nowrap; }
+  /* Tabel admin di HP: sembunyikan kolom sekunder supaya tombol Aksi muat tanpa scroll */
+  .col-hide-mobile { display: none; }
+  .table-wrap .table { min-width: 0; }
   .profile-head { gap: 16px; padding: 16px 8px; }
   .avatar.lg { width: 64px; height: 64px; font-size: 26px; }
 }

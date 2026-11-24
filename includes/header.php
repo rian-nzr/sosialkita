@@ -16,7 +16,7 @@ $flashMsg = flash();
   <link rel="stylesheet" href="<?= $base ?>assets/css/style.css">
 </head>
 <body>
-<main class="container">
+<main class="container<?= (strpos($_SERVER['PHP_SELF'], '/admin/') !== false) ? ' wide' : '' ?>">
   <?php if ($flashMsg): ?>
     <div class="alert"><?= e($flashMsg) ?></div>
   <?php endif; ?>

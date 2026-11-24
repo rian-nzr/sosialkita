@@ -28,14 +28,15 @@ include __DIR__ . '/../includes/header.php';
   </div>
   <div class="card">
     <?php if (!$comments): ?><p class="empty">Belum ada komentar.</p><?php endif; ?>
+    <div class="table-wrap">
     <table class="table">
-      <tr><th>Penulis</th><th>Komentar</th><th>Di postingan</th><th>Waktu</th><th>Aksi</th></tr>
+      <tr><th>Penulis</th><th>Komentar</th><th>Di postingan</th><th class="col-hide-mobile">Waktu</th><th>Aksi</th></tr>
       <?php foreach ($comments as $c): ?>
       <tr>
         <td><b><?= e($c['name']) ?></b><br><span class="muted">@<?= e($c['username']) ?></span></td>
         <td><?= e($c['content']) ?></td>
         <td><?= e(excerpt($c['post_content'], 80)) ?><br><a href="../post.php?id=<?= (int)$c['post_id'] ?>">Lihat post →</a></td>
-        <td><?= e(timeAgo($c['created_at'])) ?></td>
+        <td class="col-hide-mobile"><?= e(timeAgo($c['created_at'])) ?></td>
         <td>
           <form method="post" onsubmit="return confirm('Yakin hapus komentar ini?')">
             <input type="hidden" name="comment_id" value="<?= (int)$c['id'] ?>">
@@ -45,6 +46,7 @@ include __DIR__ . '/../includes/header.php';
       </tr>
       <?php endforeach; ?>
     </table>
+    </div>
   </div>
 </div>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

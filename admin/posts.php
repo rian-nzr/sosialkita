@@ -53,15 +53,16 @@ include __DIR__ . '/../includes/header.php';
   </form>
   <div class="card">
     <?php if (!$posts): ?><p class="empty">Tidak ada postingan<?= $search ? ' yang cocok.' : '.' ?></p><?php endif; ?>
+    <div class="table-wrap">
     <table class="table">
-      <tr><th>Penulis</th><th>Isi</th><th>Foto</th><th>Like / Komen</th><th>Waktu</th><th>Aksi</th></tr>
+      <tr><th>Penulis</th><th>Isi</th><th class="col-hide-mobile">Foto</th><th>Like / Komen</th><th class="col-hide-mobile">Waktu</th><th>Aksi</th></tr>
       <?php foreach ($posts as $p): ?>
       <tr>
         <td><b><?= e($p['name']) ?></b><br><span class="muted">@<?= e($p['username']) ?></span></td>
         <td><?= e(excerpt($p['content'], 140)) ?></td>
-        <td><?= $p['image'] ? '🖼️ Ya' : '—' ?></td>
+        <td class="col-hide-mobile"><?= $p['image'] ? '🖼️ Ya' : '—' ?></td>
         <td>❤️ <?= (int)$p['like_count'] ?><br>💬 <?= (int)$p['comment_count'] ?></td>
-        <td><?= e(timeAgo($p['created_at'])) ?></td>
+        <td class="col-hide-mobile"><?= e(timeAgo($p['created_at'])) ?></td>
         <td>
           <a href="../post.php?id=<?= (int)$p['id'] ?>">Lihat</a><br>
           <form method="post" onsubmit="return confirm('Yakin hapus postingan ini?')">
@@ -72,6 +73,7 @@ include __DIR__ . '/../includes/header.php';
       </tr>
       <?php endforeach; ?>
     </table>
+    </div>
   </div>
 </div>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

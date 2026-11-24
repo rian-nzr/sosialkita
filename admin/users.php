@@ -43,15 +43,16 @@ include __DIR__ . '/../includes/header.php';
     <a href="users.php" class="active">👥 Pengguna</a>
   </div>
   <div class="card">
+    <div class="table-wrap">
     <table class="table">
-      <tr><th>Nama</th><th>Username / Email</th><th>Role</th><th>Post</th><th>Bergabung</th><th>Aksi</th></tr>
+      <tr><th>Nama</th><th>Username / Email</th><th>Role</th><th class="col-hide-mobile">Post</th><th class="col-hide-mobile">Bergabung</th><th>Aksi</th></tr>
       <?php foreach ($users as $u): ?>
       <tr>
         <td><b><?= e($u['name']) ?></b><?= $u['id'] == $me['id'] ? ' <span class="muted">(kamu)</span>' : '' ?></td>
         <td>@<?= e($u['username']) ?><br><span class="muted"><?= e($u['email']) ?></span></td>
         <td><?= e($u['role']) ?></td>
-        <td><?= (int)$u['post_count'] ?></td>
-        <td><?= e(date('d M Y', strtotime($u['created_at']))) ?></td>
+        <td class="col-hide-mobile"><?= (int)$u['post_count'] ?></td>
+        <td class="col-hide-mobile"><?= e(date('d M Y', strtotime($u['created_at']))) ?></td>
         <td>
           <?php if ($u['id'] != $me['id']): ?>
           <form method="post" style="display:inline">
@@ -67,6 +68,7 @@ include __DIR__ . '/../includes/header.php';
       </tr>
       <?php endforeach; ?>
     </table>
+    </div>
   </div>
 </div>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
