@@ -30,11 +30,5 @@
   <a href="<?= $base ?? '' ?>register.php" style="font-weight:600">Daftar</a>
 </nav>
 <?php endif; ?>
-<footer class="footer">
-  <div class="container">
-    <p>© <?= date('Y') ?> <?= e(APP_NAME) ?> — Proyek Akhir: Website Sosial Media (PHP + MySQL)</p>
-    <p class="muted">Posting teks &amp; foto • Komentar • Like • Dashboard Admin</p>
-  </div>
-</footer>
 </body>
 </html>

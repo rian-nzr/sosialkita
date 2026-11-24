@@ -103,7 +103,10 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary-light);
 .auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
 /* ===== Profil ===== */
-.profile-head { display: flex; gap: 28px; align-items: center; padding: 24px 16px; }
+.profile-head { display: flex; gap: 28px; align-items: flex-start; padding: 24px 16px; }
+.profile-head .avatar.lg { margin-top: 4px; }
+.profile-info { flex: 1; min-width: 0; }
+.profile-info form { max-width: 100%; }
 .profile-info h1 { font-size: 20px; font-weight: 800; margin-bottom: 8px; color: var(--navy); }
 .profile-stats { display: flex; gap: 24px; margin: 8px 0; font-size: 14px; }
 .profile-stats b { margin-right: 4px; }
