@@ -22,13 +22,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_post'])) {
 }
 
 // --- Ambil semua postingan + info penulis + jumlah like/komentar ---
-$stmt = $pdo->query("
-    SELECT p.*, u.name, u.username,
-           (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count,
-           (SELECT COUNT(*) FROM comments WHERE post_id = p.id) AS comment_count
-    FROM posts p JOIN users u ON u.id = p.user_id
-    ORDER BY p.created_at DESC
-");
+// Kalau ada ?q= dari kotak Cari di navbar, filter berdasarkan isi/penulis.
+$searchQ = trim($_GET['q'] ?? '');
+if ($searchQ !== '') {
+    $stmt = $pdo->prepare("
+        SELECT p.*, u.name, u.username,
+               (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count,
+               (SELECT COUNT(*) FROM comments WHERE post_id = p.id) AS comment_count
+        FROM posts p JOIN users u ON u.id = p.user_id
+        WHERE p.content LIKE ? OR u.username LIKE ? OR u.name LIKE ?
+        ORDER BY p.created_at DESC
+    ");
+    $stmt->execute(["%$searchQ%", "%$searchQ%", "%$searchQ%"]);
+} else {
+    $stmt = $pdo->query("
+        SELECT p.*, u.name, u.username,
+               (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count,
+               (SELECT COUNT(*) FROM comments WHERE post_id = p.id) AS comment_count
+        FROM posts p JOIN users u ON u.id = p.user_id
+        ORDER BY p.created_at DESC
+    ");
+}
 $posts = $stmt->fetchAll();
 
 // --- Penulis unik untuk baris Stories ala IG ---
@@ -51,7 +65,7 @@ include __DIR__ . '/includes/header.php';
     <?php endforeach; ?>
   </div>
 
-  <div class="card pad">
+  <div class="card pad" id="composer">
     <form method="post" enctype="multipart/form-data">
       <div style="display:flex;gap:10px;align-items:center">
         <div class="avatar"><?= e(strtoupper(substr($user['name'], 0, 1))) ?></div>
@@ -75,8 +89,11 @@ include __DIR__ . '/includes/header.php';
   </div>
 <?php endif; ?>
 
+<?php if ($searchQ !== ''): ?>
+  <p style="padding:12px 4px">Hasil pencarian untuk <b>"<?= e($searchQ) ?>"</b> — <?= count($posts) ?> postingan · <a href="index.php">Reset</a></p>
+<?php endif; ?>
 <?php if (!$posts): ?>
-  <p class="empty">Belum ada postingan. Jadilah yang pertama posting! ✨</p>
+  <p class="empty">Belum ada postingan<?= $searchQ !== '' ? ' yang cocok.' : '. Jadilah yang pertama posting! ✨' ?></p>
 <?php endif; ?>
 
 <?php foreach ($posts as $p): $liked = $user ? userLiked((int)$p['id'], (int)$user['id']) : false; ?>

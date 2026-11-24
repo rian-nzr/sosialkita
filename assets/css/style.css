@@ -15,10 +15,15 @@ img { max-width: 100%; display: block; }
 
 /* ===== Topbar ala IG ===== */
 .topbar { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-.topbar-inner { max-width: 935px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; min-height: 60px; gap: 12px; padding: 0 16px; flex-wrap: wrap; }
-.logo { font-size: 24px; font-weight: 700; letter-spacing: -.5px; display: flex; align-items: center; gap: 8px; }
+.topbar-inner { max-width: 975px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; min-height: 60px; gap: 16px; padding: 0 20px; }
+.logo { font-size: 24px; font-weight: 700; letter-spacing: -.5px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .logo .logo-mark { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 17px; }
-.nav { display: flex; align-items: center; gap: 20px; }
+/* Search tengah ala IG */
+.topbar-search { flex: 1; max-width: 268px; margin: 0 auto; display: flex; align-items: center; gap: 6px; background: #efefef; border-radius: 8px; padding: 0 12px; height: 36px; }
+.topbar-search .search-icon { font-size: 13px; color: var(--muted); }
+.topbar-search input { border: none !important; border-radius: 0; background: transparent !important; padding: 0; height: 36px; font-size: 14px; box-shadow: none; }
+.topbar-search input:focus { outline: none; border: none; background: transparent; }
+.nav { display: flex; align-items: center; gap: 22px; flex-shrink: 0; }
 .nav a { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
 .nav a svg { width: 24px; height: 24px; }
 .nav-admin { color: #b45309 !important; }
@@ -126,6 +131,9 @@ input:focus, textarea:focus { outline: none; border-color: #a8a8a8; background: 
 /* Bottom nav mobile ala IG */
 .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 10px 0; justify-content: space-around; z-index: 10; }
 .bottom-nav a svg { width: 26px; height: 26px; }
+@media (max-width: 720px) {
+  .topbar-search { display: none; }
+}
 @media (max-width: 560px) {
   .bottom-nav { display: flex; }
   .topbar .nav { display: none; }
