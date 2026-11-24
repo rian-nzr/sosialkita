@@ -5,11 +5,13 @@ User bisa posting teks + foto, like, dan komentar. Admin memantau semuanya lewat
 
 **GitHub:** https://github.com/rian-nzr/sosialkita
 
-**Tampilan:** gaya Instagram — feed sempit 470px di tengah, baris Stories
-(lingkaran avatar ber-ring gradien), kartu postingan dengan foto persegi 1:1,
-ikon hati/komentar/bagikan, jumlah suka, caption, dan kolom komentar di bawah;
-postingan teks tampil sebagai kartu gradien; profil menampilkan grid foto 3 kolom
-ala IG; halaman login/daftar berupa kotak putih 350px ala IG.
+**Tampilan:** gaya aplikasi modern ala Rootly — latar gradien biru lembut,
+kartu putih rounded 20px dengan bayangan halus, tombol utama navy berbentuk
+pill, feed sempit 470px di tengah, baris Stories (lingkaran avatar ber-ring
+gradien biru), kartu postingan dengan foto persegi 1:1, ikon hati/komentar/
+bagikan, jumlah suka, caption, dan kolom komentar di bawah; postingan teks
+tampil sebagai kartu gradien biru; profil menampilkan grid foto 3 kolom;
+navigasi hanya lewat bottom nav pill putih dengan tombol + (FAB) biru di tengah.
 
 ## ✨ Fitur
 

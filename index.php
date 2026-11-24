@@ -52,6 +52,16 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <?php if ($user): ?>
+  <?php $hour = (int)date('G'); $greet = $hour < 11 ? 'Selamat pagi' : ($hour < 15 ? 'Selamat siang' : ($hour < 18 ? 'Selamat sore' : 'Selamat malam')); ?>
+  <div class="greeting">
+    <div class="avatar"><?= e(strtoupper(substr($user['name'], 0, 1))) ?></div>
+    <div>
+      <p><?= e($greet) ?> 👋</p>
+      <h1><?= e($user['name']) ?></h1>
+    </div>
+    <span style="flex:1"></span>
+    <a href="activity.php" title="Aktivitas" style="font-size:22px">🔔</a>
+  </div>
   <div class="stories">
     <a class="story" href="profile.php?u=<?= e($user['username']) ?>">
       <div class="ring"><div class="avatar"><?= e(strtoupper(substr($user['name'], 0, 1))) ?></div></div>

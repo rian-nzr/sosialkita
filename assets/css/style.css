@@ -1,156 +1,152 @@
-/* SosialKita — gaya Instagram: bersih, putih, feed sempit di tengah */
+/* SosialKita — gaya Rootly: gradien biru lembut, kartu rounded, tombol navy, nav pill + FAB */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --primary: #0095f6; --primary-dark: #1877f2; --danger: #ed4956;
-  --bg: #fafafa; --card: #fff; --text: #262626; --muted: #8e8e8e;
-  --border: #dbdbdb; --radius: 8px;
+  --primary: #2563eb; --primary-light: #3b82f6; --navy: #0f172a;
+  --danger: #ef4444; --like: #f43f5e;
+  --bg: #eef4fb; --card: #fff; --text: #0f172a; --muted: #64748b;
+  --border: #e2e8f0; --radius: 20px;
+  --shadow: 0 8px 24px rgba(15, 23, 42, .07);
+  --grad-blue: linear-gradient(135deg, #60a5fa, #2563eb 55%, #1d4ed8);
+  --grad-soft: linear-gradient(135deg, #dbeafe, #818cf8);
 }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.4; font-size: 14px; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 28%, #f8fafc 60%); background-attachment: fixed; color: var(--text); line-height: 1.5; font-size: 14px; min-height: 100vh; }
 a { color: var(--text); text-decoration: none; }
 a:hover { text-decoration: none; }
 img { max-width: 100%; display: block; }
-.container { max-width: 470px; margin: 0 auto; padding: 0 8px; }
+.container { max-width: 470px; margin: 0 auto; padding: 0 12px; }
 .container.wide { max-width: 935px; }
 .muted { color: var(--muted); font-size: 12px; }
 
-/* ===== Topbar ala IG ===== */
-.topbar { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-.topbar-inner { max-width: 975px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; min-height: 60px; gap: 16px; padding: 0 20px; }
-.logo { font-size: 24px; font-weight: 700; letter-spacing: -.5px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.logo .logo-mark { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 17px; }
-/* Search tengah ala IG */
-.topbar-search { flex: 1; max-width: 268px; margin: 0 auto; display: flex; align-items: center; gap: 6px; background: #efefef; border-radius: 8px; padding: 0 12px; height: 36px; }
-.topbar-search .search-icon { font-size: 13px; color: var(--muted); }
-.topbar-search input { border: none !important; border-radius: 0; background: transparent !important; padding: 0; height: 36px; font-size: 14px; box-shadow: none; }
-.topbar-search input:focus { outline: none; border: none; background: transparent; }
-.nav { display: flex; align-items: center; gap: 22px; flex-shrink: 0; }
-.nav a { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
-.nav a svg { width: 24px; height: 24px; }
-.nav-admin { color: #b45309 !important; }
-.nav-logout { color: var(--muted) !important; font-weight: 400 !important; }
+/* ===== Logo (dipakai di halaman Cari & Auth) ===== */
+.logo { font-size: 24px; font-weight: 800; letter-spacing: -.5px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; color: var(--navy); }
+.logo .logo-mark { width: 32px; height: 32px; border-radius: 10px; background: var(--grad-blue); display: inline-flex; align-items: center; justify-content: center; color: #fff; font-size: 17px; box-shadow: 0 4px 12px rgba(37, 99, 235, .35); }
 
 /* ===== Card & form ===== */
-.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin: 16px 0; overflow: hidden; }
-.card.pad { padding: 16px; }
-.alert { background: #e0f2fe; border: 1px solid #bae6fd; color: #0c4a6e; padding: 12px 14px; border-radius: 8px; margin: 16px 0; font-size: 14px; }
+.card { background: var(--card); border: 1px solid rgba(226, 232, 240, .7); border-radius: var(--radius); margin: 14px 0; overflow: hidden; box-shadow: var(--shadow); }
+.card.pad { padding: 18px; }
+.alert { background: #dbeafe; border: 1px solid #bfdbfe; color: #1e3a8a; padding: 12px 16px; border-radius: 14px; margin: 14px 0; font-size: 14px; }
 .alert.error { background: #fee2e2; border-color: #fecaca; color: #991b1b; }
 label { display: block; font-weight: 600; font-size: 14px; margin: 12px 0 6px; }
 input[type=text], input[type=email], input[type=password], input[type=file], textarea, select {
-  width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font: inherit; background: #fafafa; font-size: 14px;
+  width: 100%; padding: 12px 14px; border: 1px solid transparent; border-radius: 14px; font: inherit; background: #f1f5f9; font-size: 14px;
 }
 textarea { resize: vertical; min-height: 80px; }
-input:focus, textarea:focus { outline: none; border-color: #a8a8a8; background: #fff; }
-.btn { display: inline-block; padding: 8px 16px; border: none; border-radius: 8px; font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; background: #efefef; color: var(--text); }
-.btn-primary { background: var(--primary); color: #fff; }
-.btn-primary:hover { background: #1877f2; }
+input:focus, textarea:focus { outline: none; border-color: var(--primary-light); background: #fff; box-shadow: 0 0 0 3px rgba(59, 130, 246, .15); }
+.btn { display: inline-block; padding: 10px 18px; border: none; border-radius: 999px; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; background: #e2e8f0; color: var(--navy); }
+.btn-primary { background: var(--navy); color: #fff; }
+.btn-primary:hover { background: #1e293b; }
 .btn-danger { background: var(--danger); color: #fff; }
-.btn-sm { padding: 6px 12px; font-size: 13px; }
-.btn-block { width: 100%; margin-top: 14px; }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
+.btn-block { width: 100%; margin-top: 14px; padding: 13px; }
 
-/* ===== Stories ala IG ===== */
-.stories { display: flex; gap: 16px; overflow-x: auto; padding: 16px 8px 12px; scrollbar-width: none; }
+/* ===== Greeting (atas feed, ala Rootly) ===== */
+.greeting { display: flex; align-items: center; gap: 12px; padding: 20px 4px 4px; }
+.greeting .avatar { width: 44px; height: 44px; font-size: 18px; }
+.greeting h1 { font-size: 20px; font-weight: 800; color: var(--navy); line-height: 1.2; }
+.greeting p { color: var(--muted); font-size: 13px; }
+
+/* ===== Stories ===== */
+.stories { display: flex; gap: 14px; overflow-x: auto; padding: 14px 4px 10px; scrollbar-width: none; }
 .stories::-webkit-scrollbar { display: none; }
-.story { flex-shrink: 0; width: 74px; text-align: center; font-size: 12px; }
-.story .ring { width: 66px; height: 66px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); margin: 0 auto 6px; }
+.story { flex-shrink: 0; width: 72px; text-align: center; font-size: 12px; color: var(--text); }
+.story .ring { width: 64px; height: 64px; border-radius: 50%; padding: 3px; background: var(--grad-soft); margin: 0 auto 6px; box-shadow: 0 4px 12px rgba(59, 130, 246, .25); }
 .story .ring .avatar { width: 100%; height: 100%; border: 3px solid #fff; font-size: 22px; }
 .story span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* ===== Post ala IG ===== */
-.post-head { display: flex; gap: 12px; align-items: center; padding: 12px 14px; }
-.avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #0095f6, #833ab4); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+/* ===== Post ===== */
+.post-head { display: flex; gap: 12px; align-items: center; padding: 14px 16px; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--grad-blue); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
 .avatar.lg { width: 86px; height: 86px; font-size: 34px; }
 .post-meta { flex: 1; min-width: 0; }
-.post-meta b { display: block; font-size: 14px; }
+.post-meta b { display: block; font-size: 14px; color: var(--navy); }
 .post-meta span { color: var(--muted); font-size: 12px; }
 .post-menu { color: var(--text); font-weight: 700; letter-spacing: 1px; background: none; border: none; cursor: pointer; font-size: 16px; }
-.post-media { background: #000; }
+.post-media { background: #0f172a; }
 .post-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
-.post-text-tile { aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 32px; text-align: center; background: linear-gradient(135deg, #f09433, #dc2743, #833ab4); color: #fff; font-size: 20px; font-weight: 700; line-height: 1.35; }
+.post-text-tile { aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 32px; text-align: center; background: linear-gradient(135deg, #60a5fa, #6366f1 60%, #8b5cf6); color: #fff; font-size: 20px; font-weight: 700; line-height: 1.35; }
 .post-text-tile p { white-space: pre-wrap; word-break: break-word; }
-.post-actions { display: flex; gap: 14px; align-items: center; padding: 10px 14px 4px; }
-.post-actions .icon-btn { background: none; border: none; cursor: pointer; padding: 0; line-height: 0; }
+.post-actions { display: flex; gap: 14px; align-items: center; padding: 12px 16px 4px; }
+.post-actions .icon-btn { background: none; border: none; cursor: pointer; padding: 0; line-height: 0; color: var(--navy); }
 .post-actions .icon-btn svg { width: 26px; height: 26px; }
-.post-actions .icon-btn.liked svg { fill: var(--danger); stroke: var(--danger); }
+.post-actions .icon-btn.liked svg { fill: var(--like); stroke: var(--like); }
 .post-actions .spacer { flex: 1; }
-.post-body { padding: 2px 14px 12px; }
-.post-likes { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.post-body { padding: 2px 16px 14px; }
+.post-likes { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--navy); }
 .post-caption { font-size: 14px; word-break: break-word; }
 .post-caption b { margin-right: 5px; }
 .post-caption p { display: inline; white-space: pre-wrap; }
 .post-comments-link { color: var(--muted); font-size: 14px; display: block; margin-top: 4px; }
 .post-time { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .3px; margin-top: 6px; }
-.post-add-comment { display: flex; gap: 10px; align-items: center; border-top: 1px solid #efefef; padding: 10px 14px; }
-.post-add-comment input { border: none; background: transparent; padding: 6px 0; flex: 1; }
-.post-add-comment input:focus { outline: none; }
-.post-add-comment button { background: none; border: none; color: var(--primary); font-weight: 600; cursor: pointer; font-size: 14px; }
-.post-actions-row { display: flex; gap: 8px; align-items: center; padding: 10px 14px; border-top: 1px solid #efefef; flex-wrap: wrap; }
+.post-add-comment { display: flex; gap: 10px; align-items: center; border-top: 1px solid #f1f5f9; padding: 12px 16px; }
+.post-add-comment input { border: none; background: transparent; padding: 6px 0; flex: 1; box-shadow: none; }
+.post-add-comment input:focus { outline: none; box-shadow: none; }
+.post-add-comment button { background: none; border: none; color: var(--primary); font-weight: 700; cursor: pointer; font-size: 14px; }
+.post-actions-row { display: flex; gap: 8px; align-items: center; padding: 12px 16px; border-top: 1px solid #f1f5f9; flex-wrap: wrap; }
 .link-danger { color: var(--danger); background: none; border: none; font: inherit; cursor: pointer; padding: 0; font-size: 14px; }
 .inline-form { display: inline; }
 
 /* ===== Komentar ===== */
-.comment { display: flex; gap: 10px; padding: 12px 14px; }
+.comment { display: flex; gap: 10px; padding: 12px 16px; }
 .comment .avatar { width: 32px; height: 32px; }
 .comment-body { flex: 1; font-size: 14px; }
 .comment-body p { white-space: pre-wrap; word-break: break-word; }
 .comment-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-/* ===== Auth ala IG ===== */
-.auth-wrap { max-width: 350px; margin: 48px auto 16px; }
-.auth-wrap .card { padding: 28px 32px; text-align: center; margin: 0 0 12px; }
-.auth-wrap .logo { justify-content: center; font-size: 28px; margin-bottom: 20px; }
+/* ===== Auth ala Rootly ===== */
+.auth-wrap { max-width: 380px; margin: 40px auto 16px; }
+.auth-wrap .card { padding: 32px 28px; text-align: center; margin: 0 0 12px; border-radius: 28px; }
+.auth-wrap .logo { justify-content: center; font-size: 28px; margin-bottom: 8px; }
+.auth-wrap .logo .logo-mark { width: 44px; height: 44px; border-radius: 14px; font-size: 24px; }
 .auth-wrap form { text-align: left; }
-.auth-wrap .btn-block { border-radius: 8px; padding: 9px; }
+.auth-wrap .btn-block { border-radius: 999px; padding: 13px; }
 .auth-divider { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 13px; font-weight: 600; margin: 18px 0; }
 .auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
-/* ===== Profil ala IG ===== */
+/* ===== Profil ===== */
 .profile-head { display: flex; gap: 28px; align-items: center; padding: 24px 16px; }
-.profile-info h1 { font-size: 20px; font-weight: 400; margin-bottom: 8px; }
+.profile-info h1 { font-size: 20px; font-weight: 800; margin-bottom: 8px; color: var(--navy); }
 .profile-stats { display: flex; gap: 24px; margin: 8px 0; font-size: 14px; }
 .profile-stats b { margin-right: 4px; }
-.profile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: 16px; }
-.profile-grid a { aspect-ratio: 1 / 1; overflow: hidden; background: #000; position: relative; }
+.profile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 16px; }
+.profile-grid a { aspect-ratio: 1 / 1; overflow: hidden; background: #0f172a; position: relative; border-radius: 14px; }
 .profile-grid img { width: 100%; height: 100%; object-fit: cover; }
-.profile-grid .grid-text { aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 10px; text-align: center; background: linear-gradient(135deg, #f09433, #dc2743, #833ab4); color: #fff; font-size: 12px; font-weight: 600; overflow: hidden; }
+.profile-grid .grid-text { aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 10px; text-align: center; background: linear-gradient(135deg, #60a5fa, #6366f1 60%, #8b5cf6); color: #fff; font-size: 12px; font-weight: 600; overflow: hidden; }
 
 /* ===== Admin ===== */
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin: 16px 0; }
-.stat { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; }
+.stat { background: #fff; border: 1px solid rgba(226, 232, 240, .7); border-radius: var(--radius); padding: 20px 18px; text-align: center; box-shadow: var(--shadow); }
 .stat b { font-size: 32px; display: block; color: var(--primary); }
 .stat span { color: var(--muted); font-size: 14px; }
+.stat:nth-child(2) b { color: #059669; }
+.stat:nth-child(3) b { color: #d97706; }
+.stat:nth-child(4) b { color: #db2777; }
 .table { width: 100%; border-collapse: collapse; font-size: 14px; }
-/* Tabel admin di HP: jangan dipaksa muat — beri lebar minimum & scroll horizontal di dalam kartu */
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .table-wrap .table { min-width: 620px; }
-.table th, .table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: top; white-space: normal; }
-.table th { color: var(--muted); }
+.table th, .table td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: top; white-space: normal; }
+.table th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .4px; }
 .table td .btn { white-space: nowrap; }
 .admin-tabs { display: flex; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
-.admin-tabs a { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: var(--text); font-weight: 600; }
-.admin-tabs a.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.admin-tabs a { padding: 9px 18px; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: var(--text); font-weight: 700; box-shadow: var(--shadow); }
+.admin-tabs a.active { background: var(--navy); color: #fff; border-color: var(--navy); }
 
-.footer { text-align: center; color: var(--muted); padding: 32px 16px 130px; font-size: 12px; }
+.footer { text-align: center; color: var(--muted); padding: 32px 16px 140px; font-size: 12px; }
 .empty { text-align: center; color: var(--muted); padding: 32px 12px; }
 
-/* Bottom nav pill mengambang ala IG (seperti di gambar: putih, rounded, 5 ikon) */
-.bottom-nav { display: flex; position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #e5e5e5; border-radius: 999px; box-shadow: 0 6px 24px rgba(0,0,0,.16); padding: 10px 26px; gap: 34px; align-items: center; z-index: 20; width: max-content; max-width: calc(100vw - 32px); }
-.bottom-nav-item { display: inline-flex; align-items: center; justify-content: center; color: var(--text); line-height: 0; }
+/* Bottom nav pill ala Rootly: putih, rounded, FAB biru di tengah */
+.bottom-nav { display: flex; position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, .96); border: 1px solid rgba(226, 232, 240, .8); border-radius: 999px; box-shadow: 0 12px 32px rgba(15, 23, 42, .18); padding: 10px 26px; gap: 30px; align-items: center; z-index: 20; width: max-content; max-width: calc(100vw - 32px); }
+.bottom-nav-item { display: inline-flex; align-items: center; justify-content: center; color: var(--navy); line-height: 0; }
 .bottom-nav-item svg { display: block; }
-main.container { padding-bottom: 90px; }
-@media (max-width: 720px) {
-  .topbar-search { max-width: 160px; }
-  .logo { font-size: 20px; }
-  .topbar-inner { padding: 0 12px; gap: 10px; }
-}
+.bottom-nav-item.active { color: var(--primary); }
+.bottom-nav-item.fab { width: 54px; height: 54px; border-radius: 50%; background: var(--grad-blue); color: #fff; margin-top: -30px; box-shadow: 0 10px 22px rgba(37, 99, 235, .45); border: 4px solid #fff; flex-shrink: 0; }
+.bottom-nav-item.fab svg { width: 26px; height: 26px; }
+main.container { padding-bottom: 100px; }
 @media (max-width: 560px) {
-  .topbar .nav { display: none; }
-  .bottom-nav { gap: 26px; padding: 10px 22px; bottom: 14px; }
+  .bottom-nav { gap: 24px; padding: 10px 20px; bottom: 14px; }
   .admin-tabs { gap: 6px; }
-  .admin-tabs a { padding: 7px 12px; font-size: 13px; }
+  .admin-tabs a { padding: 7px 12px; font-size: 13px; white-space: nowrap; }
   .stats { gap: 10px; }
-  .card.pad { padding: 12px; }
-  .admin-tabs a { white-space: nowrap; }
-  /* Tabel admin di HP: sembunyikan kolom sekunder supaya tombol Aksi muat tanpa scroll */
+  .card.pad { padding: 14px; }
   .col-hide-mobile { display: none; }
   .table-wrap .table { min-width: 0; }
   .profile-head { gap: 16px; padding: 16px 8px; }
