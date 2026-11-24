@@ -21,7 +21,8 @@ $recentUsers = $pdo->query('SELECT * FROM users ORDER BY created_at DESC LIMIT 5
 include __DIR__ . '/../includes/header.php';
 ?>
 <div class="container wide" style="padding:0">
-  <h1 style="margin-top:20px">🛡️ Dashboard Admin</h1>
+  <p style="margin-top:16px"><a href="../index.php">← Beranda SosialKita</a></p>
+  <h1 style="margin-top:8px">🛡️ Dashboard Admin</h1>
   <p class="muted">Halo, <?= e($user['name']) ?> — pantau semua aktivitas di <?= e(APP_NAME) ?> dari sini.</p>
 
   <div class="admin-tabs">

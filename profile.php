@@ -37,6 +37,12 @@ include __DIR__ . '/includes/header.php';
       <p><b><?= e($profile['name']) ?></b></p>
       <p><?= e($profile['bio'] ?: 'Belum ada bio.') ?></p>
       <p class="muted">Bergabung <?= e(date('d M Y', strtotime($profile['created_at']))) ?></p>
+      <?php if ($user && $user['role'] === 'admin'): ?>
+        <a class="btn btn-sm" href="admin/index.php" style="margin-top:10px">🛡️ Dashboard Admin</a>
+      <?php endif; ?>
+      <?php if ($user && $user['id'] == $profile['id']): ?>
+        <a class="btn btn-sm" href="logout.php" style="margin-top:10px">Keluar</a>
+      <?php endif; ?>
       <?php if ($user && ($user['id'] == $profile['id'] || $user['role'] === 'admin')): ?>
         <form method="post" style="max-width:320px;margin-top:10px">
           <input type="text" name="bio" maxlength="255" value="<?= e($profile['bio'] ?? '') ?>" placeholder="Edit bio...">
