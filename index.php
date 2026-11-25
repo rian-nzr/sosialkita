@@ -83,9 +83,14 @@ include __DIR__ . '/includes/header.php';
       </div>
       <?php if (!empty($error)): ?><div class="alert error"><?= e($error) ?></div><?php endif; ?>
       <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
-        <label style="margin:0;font-weight:400;color:var(--muted);cursor:pointer">📷 <input type="file" name="image" accept="image/*" style="display:none" onchange="this.parentElement.firstChild.textContent='📷 Foto dipilih'"></label>
+        <label style="margin:0;font-weight:400;color:var(--muted);cursor:pointer"><span class="file-label-text">📷 Tambah foto</span> <input type="file" name="image" accept="image/*" style="display:none" data-preview="composer-preview-wrap"></label>
         <span style="flex:1"></span>
         <button class="btn btn-primary btn-sm" type="submit" name="create_post">Bagikan</button>
+      </div>
+      <div class="img-preview-wrap" id="composer-preview-wrap" hidden>
+        <img alt="Pratinjau foto">
+        <button type="button" class="img-preview-remove" data-preview-remove title="Batalkan foto">✕</button>
+        <p class="img-preview-note">Pratinjau — foto baru diunggah setelah kamu tekan Bagikan.</p>
       </div>
       <p class="muted" style="margin-top:8px">Tulis di kolom atas, tambah foto kalau mau (maks 2 MB). Untuk caption panjang, pakai halaman detail postingan.</p>
     </form>

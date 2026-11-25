@@ -46,7 +46,12 @@ include __DIR__ . '/includes/header.php';
       <label><input type="checkbox" name="remove_image" value="1"> Hapus foto ini</label>
     <?php endif; ?>
     <label>Ganti foto (opsional)</label>
-    <input type="file" name="image" accept="image/*">
+    <input type="file" name="image" accept="image/*" data-preview="edit-preview-wrap">
+    <div class="img-preview-wrap" id="edit-preview-wrap" hidden>
+      <img alt="Pratinjau foto baru">
+      <button type="button" class="img-preview-remove" data-preview-remove title="Batalkan foto baru">✕</button>
+      <p class="img-preview-note">Pratinjau foto baru — baru tersimpan setelah kamu tekan Simpan perubahan.</p>
+    </div>
     <button class="btn btn-primary" type="submit" style="margin-top:14px">Simpan perubahan</button>
     <a class="btn" href="post.php?id=<?= $id ?>">Batal</a>
   </form>

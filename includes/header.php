@@ -14,6 +14,7 @@ $flashMsg = flash();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= e(APP_NAME) ?><?= isset($pageTitle) ? ' — ' . e($pageTitle) : '' ?></title>
   <link rel="stylesheet" href="<?= $base ?>assets/css/style.css">
+  <script src="<?= $base ?>assets/js/image-preview.js" defer></script>
 </head>
 <body>
 <main class="container<?= (strpos($_SERVER['PHP_SELF'], '/admin/') !== false) ? ' wide' : '' ?>">

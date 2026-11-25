@@ -137,6 +137,12 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary-light);
 
 .empty { text-align: center; color: var(--muted); padding: 32px 12px; }
 
+/* ===== Pratinjau foto sebelum upload ===== */
+.img-preview-wrap { position: relative; margin-top: 12px; }
+.img-preview-wrap img { width: 100%; display: block; border-radius: 12px; max-height: 340px; object-fit: cover; }
+.img-preview-remove { position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; border-radius: 50%; border: none; background: rgba(15, 23, 42, .75); color: #fff; font-size: 15px; line-height: 1; cursor: pointer; }
+.img-preview-note { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
 /* ===== Daftar rapi (Dashboard Admin) ===== */
 .card-head { padding: 18px 18px 8px; }
 .card-head h2 { font-size: 17px; font-weight: 800; color: #f8fafc; }
