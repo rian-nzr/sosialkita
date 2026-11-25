@@ -28,10 +28,15 @@ function isAdmin(): bool {
     return $u && $u['role'] === 'admin';
 }
 
+// Redirect di sini WAJIB pakai path absolut dari root web ('/index.php',
+// bukan 'index.php'): 'Location: index.php' yang relatif akan diartikan
+// browser relatif terhadap URL saat ini — dari /admin/ itu berarti
+// /admin/index.php, sehingga requireAdmin() mengulang redirect ke dirinya
+// sendiri sampai browser menampilkan ERR_TOO_MANY_REDIRECTS.
 function requireLogin(): void {
     if (!isLoggedIn()) {
         flash('Login dulu ya untuk lanjut.', 'error');
-        header('Location: login.php');
+        header('Location: /login.php');
         exit;
     }
 }
@@ -40,7 +45,7 @@ function requireAdmin(): void {
     requireLogin();
     if (!isAdmin()) {
         flash('Halaman ini khusus admin.', 'error');
-        header('Location: index.php');
+        header('Location: /index.php');
         exit;
     }
 }
