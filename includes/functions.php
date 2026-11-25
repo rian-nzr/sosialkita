@@ -30,7 +30,7 @@ function isAdmin(): bool {
 
 function requireLogin(): void {
     if (!isLoggedIn()) {
-        $_SESSION['flash'] = 'Login dulu ya untuk lanjut.';
+        flash('Login dulu ya untuk lanjut.', 'error');
         header('Location: login.php');
         exit;
     }
@@ -39,7 +39,7 @@ function requireLogin(): void {
 function requireAdmin(): void {
     requireLogin();
     if (!isAdmin()) {
-        $_SESSION['flash'] = 'Halaman ini khusus admin.';
+        flash('Halaman ini khusus admin.', 'error');
         header('Location: index.php');
         exit;
     }
@@ -50,14 +50,22 @@ function redirect(string $url): void {
     exit;
 }
 
-function flash(?string $msg = null): ?string {
+// Pesan kilat (toast): flash('...') = sukses, flash('...', 'error') = gagal,
+// flash('...', 'info') = info. Pesan yang sudah menunggu TIDAK ditimpa oleh
+// pesan berikutnya — jadi pesan sukses (mis. "Postingan berhasil dihapus.")
+// tidak hilang ketimpa pesan dari halaman tujuan redirect.
+function flash(?string $msg = null, string $type = 'success'): ?array {
     if ($msg !== null) {
-        $_SESSION['flash'] = $msg;
+        if (empty($_SESSION['flash'])) {
+            $_SESSION['flash'] = ['msg' => $msg, 'type' => $type];
+        }
         return null;
     }
     if (!empty($_SESSION['flash'])) {
         $m = $_SESSION['flash'];
         unset($_SESSION['flash']);
+        // Kompatibel dengan sesi lama yang menyimpan string biasa.
+        if (is_string($m)) $m = ['msg' => $m, 'type' => 'info'];
         return $m;
     }
     return null;

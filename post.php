@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
         $stmt->execute([$id, $user['id'], $content]);
         flash('Komentar ditambahkan.');
     } else {
-        flash('Komentar tidak boleh kosong (maks 1000 karakter).');
+        flash('Komentar tidak boleh kosong (maks 1000 karakter).', 'error');
     }
     redirect('post.php?id=' . $id);
 }
@@ -24,7 +24,7 @@ $stmt = $pdo->prepare('
     FROM posts p JOIN users u ON u.id = p.user_id WHERE p.id = ?');
 $stmt->execute([$id]);
 $post = $stmt->fetch();
-if (!$post) { flash('Postingan tidak ditemukan.'); redirect('index.php'); }
+if (!$post) { flash('Postingan tidak ditemukan.', 'error'); redirect('index.php'); }
 $pageTitle = 'Postingan @' . $post['username'];
 
 // --- Ambil komentar ---

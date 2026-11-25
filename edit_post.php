@@ -6,9 +6,9 @@ $id = (int) ($_GET['id'] ?? 0);
 $stmt = $pdo->prepare('SELECT * FROM posts WHERE id = ?');
 $stmt->execute([$id]);
 $post = $stmt->fetch();
-if (!$post) { flash('Postingan tidak ditemukan.'); redirect('index.php'); }
+if (!$post) { flash('Postingan tidak ditemukan.', 'error'); redirect('index.php'); }
 if ($post['user_id'] != $user['id'] && $user['role'] !== 'admin') {
-    flash('Kamu hanya bisa mengedit postinganmu sendiri.');
+    flash('Kamu hanya bisa mengedit postinganmu sendiri.', 'error');
     redirect('index.php');
 }
 $pageTitle = 'Edit Postingan';

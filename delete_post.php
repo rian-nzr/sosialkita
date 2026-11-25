@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$id]);
         flash('Postingan berhasil dihapus.');
     } else {
-        flash('Postingan tidak ditemukan atau kamu tidak berhak menghapusnya.');
+        flash('Postingan tidak ditemukan atau kamu tidak berhak menghapusnya.', 'error');
     }
 }
 redirect($_SERVER['HTTP_REFERER'] ?? 'index.php');

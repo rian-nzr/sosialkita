@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('Komentar berhasil diedit.');
         redirect('post.php?id=' . $c['post_id']);
     }
-    flash('Komentar tidak ditemukan atau tidak bisa diedit.');
+    flash('Komentar tidak ditemukan atau tidak bisa diedit.', 'error');
     redirect('index.php');
 }
 redirect('index.php');

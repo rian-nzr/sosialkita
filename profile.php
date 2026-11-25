@@ -4,7 +4,7 @@ $username = $_GET['u'] ?? '';
 $stmt = $pdo->prepare('SELECT id, name, username, email, bio, role, created_at FROM users WHERE username = ?');
 $stmt->execute([$username]);
 $profile = $stmt->fetch();
-if (!$profile) { flash('Pengguna tidak ditemukan.'); redirect('index.php'); }
+if (!$profile) { flash('Pengguna tidak ditemukan.', 'error'); redirect('index.php'); }
 $pageTitle = '@' . $profile['username'];
 $user = currentUser();
 

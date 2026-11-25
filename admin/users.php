@@ -7,7 +7,7 @@ $me = currentUser();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uid = (int) ($_POST['user_id'] ?? 0);
     if ($uid === (int) $me['id']) {
-        flash('Kamu tidak bisa mengubah akunmu sendiri dari sini.');
+        flash('Kamu tidak bisa mengubah akunmu sendiri dari sini.', 'error');
     } elseif (isset($_POST['toggle_role'])) {
         $stmt = $pdo->prepare('SELECT role FROM users WHERE id = ?');
         $stmt->execute([$uid]);

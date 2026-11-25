@@ -13,6 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flash('Komentar berhasil dihapus.');
         redirect('post.php?id=' . $c['post_id']);
     }
-    flash('Komentar tidak ditemukan atau tidak bisa dihapus.');
+    flash('Komentar tidak ditemukan atau tidak bisa dihapus.', 'error');
 }
 redirect('index.php');
