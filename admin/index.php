@@ -39,23 +39,34 @@ include __DIR__ . '/../includes/header.php';
   </div>
 
   <div class="card">
-    <h2>Postingan terbaru</h2>
+    <div class="card-head"><h2>Postingan terbaru</h2></div>
     <?php if (!$recentPosts): ?><p class="empty">Belum ada postingan.</p><?php endif; ?>
     <?php foreach ($recentPosts as $p): ?>
-      <p><b><?= e($p['name']) ?></b> <span class="muted">@<?= e($p['username']) ?> · <?= e(timeAgo($p['created_at'])) ?></span><br>
-      <?= e(excerpt($p['content'], 120)) ?>
-      <span class="muted">— ❤️ <?= (int)$p['like_count'] ?> · 💬 <?= (int)$p['comment_count'] ?></span>
-      <a href="../post.php?id=<?= (int)$p['id'] ?>">Lihat →</a></p>
+      <div class="list-row">
+        <div class="avatar"><?= e(strtoupper(substr($p['name'], 0, 1))) ?></div>
+        <div class="list-body">
+          <b><?= e($p['name']) ?></b> <span class="list-meta">@<?= e($p['username']) ?> · <?= e(timeAgo($p['created_at'])) ?></span>
+          <p><?= e(excerpt($p['content'], 120)) ?></p>
+          <span class="list-meta">❤️ <?= (int)$p['like_count'] ?> · 💬 <?= (int)$p['comment_count'] ?></span>
+        </div>
+        <a class="list-action" href="../post.php?id=<?= (int)$p['id'] ?>">Lihat</a>
+      </div>
     <?php endforeach; ?>
-    <p><a href="posts.php">Kelola semua postingan →</a></p>
+    <div class="card-foot"><a href="posts.php">Kelola semua postingan →</a></div>
   </div>
 
   <div class="card">
-    <h2>Pengguna terbaru</h2>
+    <div class="card-head"><h2>Pengguna terbaru</h2></div>
     <?php foreach ($recentUsers as $u): ?>
-      <p><b><?= e($u['name']) ?></b> <span class="muted">@<?= e($u['username']) ?> · <?= e($u['role']) ?> · <?= e(timeAgo($u['created_at'])) ?></span></p>
+      <div class="list-row">
+        <div class="avatar"><?= e(strtoupper(substr($u['name'], 0, 1))) ?></div>
+        <div class="list-body">
+          <b><?= e($u['name']) ?></b> <span class="list-meta">@<?= e($u['username']) ?> · <?= e($u['role']) ?> · <?= e(timeAgo($u['created_at'])) ?></span>
+        </div>
+        <a class="list-action" href="../profile.php?u=<?= e($u['username']) ?>">Lihat</a>
+      </div>
     <?php endforeach; ?>
-    <p><a href="users.php">Kelola semua pengguna →</a></p>
+    <div class="card-foot"><a href="users.php">Kelola semua pengguna →</a></div>
   </div>
 </div>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

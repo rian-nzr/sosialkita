@@ -137,6 +137,18 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary-light);
 
 .empty { text-align: center; color: var(--muted); padding: 32px 12px; }
 
+/* ===== Daftar rapi (Dashboard Admin) ===== */
+.card-head { padding: 18px 18px 8px; }
+.card-head h2 { font-size: 17px; font-weight: 800; color: #f8fafc; }
+.list-row { display: flex; gap: 12px; padding: 14px 18px; align-items: flex-start; }
+.list-row + .list-row { border-top: 1px solid var(--border); }
+.list-row .list-body { flex: 1; min-width: 0; }
+.list-row .list-body p { word-break: break-word; margin-top: 2px; }
+.list-meta { color: var(--muted); font-size: 12px; }
+.list-row .list-action { flex-shrink: 0; color: var(--primary-light); font-weight: 700; font-size: 13px; white-space: nowrap; }
+.card-foot { padding: 14px 18px; border-top: 1px solid var(--border); }
+.card-foot a { color: var(--primary-light); font-weight: 700; }
+
 /* Bottom nav pill ala Rootly (mode gelap): slate, rounded, FAB biru di tengah */
 .bottom-nav { display: flex; position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: rgba(30, 41, 59, .97); border: 1px solid rgba(51, 65, 85, .9); border-radius: 999px; box-shadow: 0 12px 32px rgba(0, 0, 0, .5); padding: 10px 26px; gap: 30px; align-items: center; z-index: 20; width: max-content; max-width: calc(100vw - 32px); }
 .bottom-nav-item { display: inline-flex; align-items: center; justify-content: center; color: #e2e8f0; line-height: 0; }
