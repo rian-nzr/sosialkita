@@ -194,7 +194,7 @@ dihapus manual atau `database.sql` di-import ulang saat pull.
 | `735f6ee4` | Toast mengambang (sukses hijau ✓ / gagal merah ⚠ / info biru ℹ, tombol ✕, hilang otomatis 5 detik); `flash()` bertipe + pesan tidak ditimpa (BUG-04) |
 | `15119588` | Redirect `requireLogin()`/`requireAdmin()` absolut dari root (BUG-01) |
 | `bf6bb5b6` | Pratinjau foto sebelum upload di composer & edit postingan (TC-29) |
-| (commit perbaikan QA) | Konfirmasi ubah role, padding bawah 150px, jumlah like/komentar di detail postingan, kotak cari admin Komentar, `excerpt()` batas kata (BUG-03, BUG-05, BUG-06, BUG-09, BUG-10) |
+| `3aa3d622` | Konfirmasi ubah role, padding bawah 150px, jumlah like/komentar di detail postingan, kotak cari admin Komentar, `excerpt()` batas kata (BUG-03, BUG-05, BUG-06, BUG-09, BUG-10) + laporan ini |
 
 ---
 
