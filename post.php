@@ -63,7 +63,9 @@ include __DIR__ . '/includes/header.php';
         </button>
       </form>
     <?php endif; ?>
+    <span class="action-count"><?= (int)$post['like_count'] ?></span>
     <span title="Komentar"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1.1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg></span>
+    <span class="action-count"><?= count($comments) ?></span>
   </div>
 
   <div class="post-body">

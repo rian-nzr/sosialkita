@@ -55,7 +55,7 @@ include __DIR__ . '/../includes/header.php';
         <td class="col-hide-mobile"><?= e(date('d M Y', strtotime($u['created_at']))) ?></td>
         <td>
           <?php if ($u['id'] != $me['id']): ?>
-          <form method="post" style="display:inline">
+          <form method="post" style="display:inline" onsubmit="return confirm('Yakin <?= $u['role'] === 'admin' ? 'turunkan role pengguna ini menjadi user' : 'jadikan pengguna ini admin' ?>?')">
             <input type="hidden" name="user_id" value="<?= (int)$u['id'] ?>">
             <button class="btn btn-sm" type="submit" name="toggle_role">Jadikan <?= $u['role'] === 'admin' ? 'user' : 'admin' ?></button>
           </form>

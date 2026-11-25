@@ -108,7 +108,7 @@ include __DIR__ . '/includes/header.php';
         <?php if ($p['image']): ?>
           <img src="uploads/<?= e($p['image']) ?>" alt="Foto postingan">
         <?php else: ?>
-          <div class="grid-text"><?= e(substr($p['content'], 0, 80)) ?></div>
+          <div class="grid-text"><?= e(excerpt($p['content'], 80)) ?></div>
         <?php endif; ?>
       </a>
     <?php endforeach; ?>

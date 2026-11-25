@@ -9,12 +9,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_comment'])) {
     redirect('comments.php');
 }
 
-$comments = $pdo->query('
-    SELECT c.*, u.name, u.username, p.content AS post_content
-    FROM comments c
-    JOIN users u ON u.id = c.user_id
-    JOIN posts p ON p.id = c.post_id
-    ORDER BY c.created_at DESC')->fetchAll();
+$search = trim($_GET['q'] ?? '');
+if ($search !== '') {
+    $stmt = $pdo->prepare('
+        SELECT c.*, u.name, u.username, p.content AS post_content
+        FROM comments c
+        JOIN users u ON u.id = c.user_id
+        JOIN posts p ON p.id = c.post_id
+        WHERE c.content LIKE ? OR u.username LIKE ? OR u.name LIKE ? OR p.content LIKE ?
+        ORDER BY c.created_at DESC');
+    $stmt->execute(["%$search%", "%$search%", "%$search%", "%$search%"]);
+} else {
+    $stmt = $pdo->query('
+        SELECT c.*, u.name, u.username, p.content AS post_content
+        FROM comments c
+        JOIN users u ON u.id = c.user_id
+        JOIN posts p ON p.id = c.post_id
+        ORDER BY c.created_at DESC');
+}
+$comments = $stmt->fetchAll();
 include __DIR__ . '/../includes/header.php';
 ?>
 <div class="container wide" style="padding:0">
@@ -26,8 +39,13 @@ include __DIR__ . '/../includes/header.php';
     <a href="comments.php" class="active">💬 Komentar</a>
     <a href="users.php">👥 Pengguna</a>
   </div>
+  <form method="get" style="display:flex;gap:8px;margin:16px 0">
+    <input type="text" name="q" value="<?= e($search) ?>" placeholder="Cari isi komentar / penulis / postingan...">
+    <button class="btn btn-primary" type="submit">Cari</button>
+    <?php if ($search): ?><a class="btn" href="comments.php">Reset</a><?php endif; ?>
+  </form>
   <div class="card">
-    <?php if (!$comments): ?><p class="empty">Belum ada komentar.</p><?php endif; ?>
+    <?php if (!$comments): ?><p class="empty">Tidak ada komentar<?= $search ? ' yang cocok.' : '.' ?></p><?php endif; ?>
     <div class="table-wrap">
     <table class="table">
       <tr><th>Penulis</th><th>Komentar</th><th>Di postingan</th><th class="col-hide-mobile">Waktu</th><th>Aksi</th></tr>

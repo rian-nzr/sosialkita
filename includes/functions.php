@@ -129,6 +129,17 @@ function userLiked(int $postId, int $userId): bool {
     return (bool) $s->fetchColumn();
 }
 
+// Potong teks di batas kata (bukan di tengah kata) + '…'.
+// Pakai mb_* kalau tersedia supaya karakter UTF-8 tidak terpotong.
 function excerpt(string $s, int $len): string {
-    return strlen($s) > $len ? substr($s, 0, $len) . '…' : $s;
+    $strlen = function_exists('mb_strlen') ? mb_strlen($s) : strlen($s);
+    if ($strlen <= $len) return $s;
+    $substr = function_exists('mb_substr')
+        ? function ($str, $start, $l) { return mb_substr($str, $start, $l); }
+        : function ($str, $start, $l) { return substr($str, $start, $l); };
+    $cut = $substr($s, 0, $len);
+    $strrpos = function_exists('mb_strrpos') ? 'mb_strrpos' : 'strrpos';
+    $sp = $strrpos($cut, ' ');
+    if ($sp !== false && $sp > $len * 0.5) $cut = $substr($cut, 0, $sp);
+    return $cut . '…';
 }
