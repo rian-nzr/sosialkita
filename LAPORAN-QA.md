@@ -121,7 +121,7 @@ Keterangan hasil: ✅ Lolos · ❌ Gagal · ⚠️ Lolos dengan catatan.
 | ID | Temuan | Repro | Status |
 |---|---|---|---|
 | **BUG-02** | **Foto postingan tidak tampil.** Postingan demo id=4 (`uploads/20261124_152543_c766f7f4c5cb.png`) tampil sebagai area hitam kosong + teks alt, di feed, detail postingan, grid profil, dan grid Explore. Ini satu-satunya postingan berfoto, jadi semua tampilan foto praktis rusak. | Buka feed atau `post.php?id=4` | 🔴 **Terbuka** — file hanya ada di laptop penguji. Periksa: file masih ada di folder `uploads/`? Ukurannya normal? Bisa dibuka langsung di browser? |
-| **BUG-03** | **Ubah role tanpa konfirmasi.** Tombol "Jadikan admin/user" di Kelola Pengguna langsung mengeksekusi tanpa dialog konfirmasi (satu klik salah bisa menaikkan hak akses). | Admin → Pengguna → klik "Jadikan admin" | ✅ **Diperbaiki** — commit perbaikan QA (dialog `confirm()` dengan teks sesuai arah perubahan role). |
+| **BUG-03** | **Ubah role tanpa konfirmasi.** Tombol "Jadikan admin/user" di Kelola Pengguna langsung mengeksekusi tanpa dialog konfirmasi (satu klik salah bisa menaikkan hak akses). | Admin → Pengguna → klik "Jadikan admin" | ✅ **Diperbaiki** — commit perbaikan QA (dialog `confirm()` dengan teks sesuai arah perubahan role). **Tes ulang putaran 2 (Bagian 11):** QA otomatis melaporkan "tidak ada dialog", tetapi dialog `confirm()` terbukti ada di kode (`admin/users.php`, `onsubmit` form ubah role) dan tidak ada JavaScript yang menghalangi submit — kemungkinan artefak alat QA yang sama seperti di putaran 1 (lihat Bagian 6). **Verifikasi manual 5 detik oleh pengguna:** klik "Jadikan admin" dan pastikan dialog muncul (jangan klik OK). |
 | **BUG-04** | **Toast menyesatkan setelah hapus postingan.** Setelah menghapus postingan sendiri, toast berbunyi "Postingan tidak ditemukan." padahal penghapusan berhasil. | Hapus postingan sendiri dari halaman detail | ✅ **Diperbaiki** — commit `735f6ee4` (toast baru + pesan yang menunggu tidak ditimpa pesan berikutnya). **Perlu tes ulang live.** |
 
 ### 5.3 Minor
@@ -211,3 +211,87 @@ dihapus manual atau `database.sql` di-import ulang saat pull.
    **akses guest ke `/admin/*`** sebagai pengujian susulan singkat.
 6. Setelah poin 1–2 beres, aplikasi **layak diajukan** (ZIP proyek +
    link hosting) sesuai ketentuan pengumpulan.
+
+---
+
+## 11. Pengujian Susulan — Putaran 2 (26 Nov 2026, 01:37–02:33 WIB)
+
+Putaran 2 mengetes ulang semua perbaikan dari putaran 1 pada kode terbaru
+(commit `3aa3d622` + `86e8944c`, sudah di-`pull` pengguna) plus dua item
+yang belum sempat dites: akses guest ke `/admin/*` dan lebar HP 480px
+murni. Pengujian **berhenti lebih awal** karena laptop penguji dimatikan
+di tengah jalan dan browser QA berpindah ke cloud yang tidak bisa
+menjangkau `localhost` laptop — jadi dua item terakhir tidak selesai
+penuh dan harus diulang dari browser laptop.
+
+### 11.1 Hasil tes ulang perbaikan
+
+| Temuan | Hasil putaran 2 |
+|---|---|
+| BUG-01 redirect loop | ✅ **Lolos.** Sebagai demo, buka `/admin/index.php` → mendarat di beranda, tanpa error redirect; toast merah "Halaman ini khusus admin." dikonfirmasi pengguna. |
+| BUG-04 toast hapus postingan | ✅ **Lolos.** Postingan tes `[QA] Retest hapus` dibuat lalu dihapus dari halaman detailnya; toast hijau "Postingan berhasil dihapus." dan postingan hilang dari feed. Postingan tes sudah dibersihkan. |
+| BUG-05 padding nav pill | ✅ **Lolos.** Scroll feed sampai bawah: baris like/komentar dan input komentar postingan terakhir terlihat penuh di atas nav pill; input komentar di `post.php` juga ter-scroll bersih dari pill. |
+| BUG-06 caption grid | ✅ **Lolos.** Caption tile di profil demo dan Explore terpotong di batas kata ("…teks + foto,…"), bukan tengah kata. |
+| BUG-09 jumlah di detail | ✅ **Lolos.** Di `post.php`, angka tampil di samping ikon hati (1) dan ikon komentar (0 / 1). |
+| BUG-10 cari admin Komentar | ✅ **Lolos.** Kotak cari ada; cari "komentar" mengembalikan 1 komentar yang cocok; cari "zzzqqq" mengembalikan "Tidak ada komentar yang cocok."; tombol Reset muncul saat query aktif. |
+| BUG-02 foto rusak | ❌ **Masih gagal.** Postingan id=4 tetap tampil sebagai kotak hitam kosong + teks alt "Foto postingan" di feed, grid profil, grid Explore, dan `post.php?id=4`. Tetap terbuka — periksa file di laptop (Bagian 5.2). |
+| BUG-03 konfirmasi ubah role | ⚠️ **"Gagal" menurut QA otomatis — tidak terbukti di kode.** Lihat analisis di 11.2. |
+
+### 11.2 Analisis BUG-03 di putaran 2 (koreksi atas laporan QA otomatis)
+
+QA otomatis melaporkan bahwa dalam dua kali klik "Jadikan admin" tidak
+muncul dialog konfirmasi dan role langsung berubah. **Pengecekan kode
+oleh pengembang menunjukkan sebaliknya:**
+
+- Dialog `confirm()` **ada** di kode: form ubah role di `admin/users.php`
+  memakai `onsubmit="return confirm('Yakin jadikan pengguna ini admin?')"`
+  (teks menyesuaikan arah perubahan; tombol "Jadikan user" juga memakai
+  confirm). Commit perbaikan `3aa3d622` sudah di-pull ke laptop sebelum
+  pengujian — perbaikan lain dari commit yang sama (BUG-05, BUG-06,
+  BUG-09, BUG-10) terbukti lolos di putaran ini.
+- Tidak ada JavaScript yang menghalangi/mengabaikan submit form
+  (`assets/js/toast.js` dan `assets/js/image-preview.js` hanya menangani
+  toast dan pratinjau foto; tidak ada handler `submit`).
+- Percobaan pertama QA justru membuat tab "hang" — gejala khas dialog
+  `confirm()` native sedang terbuka dan memblokir alat otomatis. Role
+  demo sempat berubah menjadi admin selama pengujian, lalu **dikembalikan
+  QA menjadi "user" dan terverifikasi** (tombol "Jadikan admin" kembali).
+- Pola yang sama sudah terjadi di putaran 1: klaim "hapus tanpa
+  konfirmasi" ternyata tidak terbukti di kode (Bagian 6) karena alat QA
+  otomatis menutup/menerima dialog `confirm()` sendiri.
+
+**Kesimpulan:** BUG-03 dianggap sudah diperbaiki di kode. Verifikasi
+akhir cukup dengan cek manual singkat oleh pengguna: sebagai admin, klik
+"Jadikan admin" pada satu user dan pastikan dialog konfirmasi muncul
+(jangan klik OK agar role tidak berubah).
+
+### 11.3 Tes baru di putaran 2
+
+| ID | Modul / Fitur | Hasil |
+|---|---|---|
+| TC-31 | Akses guest ke `/admin/*` | ✅ **Lolos.** Dalam keadaan logout, buka `/admin/index.php` → dialihkan ke `login.php` (form login, nav "Masuk/Daftar"); dashboard tidak tampil. |
+| TC-32 | Responsif 480px murni | ⚠️ **Sebagian.** Hanya dashboard admin yang sempat dicek di lebar ~393px: tab membungkus, kartu statistik jadi grid 2×2, tanpa overflow horizontal. Feed, profil, search, dan tabel admin di lebar sempit **belum dites** — ulangi dari browser laptop. |
+| TC-33 | Console browser | ❌ **Tidak dites.** DevTools Console tidak sempat dibuka; tidak ada data error JS / 404 / 500. Ulangi dari browser laptop. |
+
+### 11.4 Temuan baru putaran 2
+
+| ID | Temuan | Status |
+|---|---|---|
+| NEW-2 | Di `post.php` lebar desktop, baris input komentar sempat setengah tertutup nav pill di tepi viewport sebelum di-scroll; hilang setelah scroll. | 📝 Kosmetik, tidak memblokir (BUG-05 sudah lolos). |
+| — | Overlay "sayang / Working..." yang menempel di atas layar selama pengujian dan menutupi toast | 📝 **Bukan bagian situs** — overlay alat browser QA (muncul lintas halaman bahkan setelah logout). Dicatat sebagai artefak alat, bukan bug SosialKita. |
+
+### 11.5 Keadaan akhir putaran 2
+
+Role Demo User kembali "user"; postingan tes `[QA] Retest hapus` dibuat
+lalu dihapus; tidak ada konten asli pengguna, akun, atau komentar
+("apam" oleh admin) yang dihapus/diubah.
+
+### 11.6 Sisa pekerjaan setelah putaran 2
+
+1. Ulangi TC-32 (feed, profil, search, tabel admin di lebar ~480px)
+   dan TC-33 (console) dari browser laptop.
+2. Periksa file foto BUG-02 di laptop; bila rusak, unggah ulang dan
+   hapus postingan lamanya.
+3. Verifikasi manual BUG-03 (11.2) dengan satu klik.
+4. Putuskan BUG-08 (kredensial di halaman login) dan konfirmasi data
+   Bagian 7 sebelum pengumpulan.
