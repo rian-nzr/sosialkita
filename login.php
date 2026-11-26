@@ -32,7 +32,6 @@ include __DIR__ . '/includes/header.php';
       <button class="btn btn-primary btn-block" type="submit">Masuk</button>
     </form>
     <p style="margin-top:14px;text-align:center">Belum punya akun? <a href="register.php">Daftar dulu</a></p>
-    <p class="muted" style="text-align:center;font-size:13px">Akun demo — admin@forumjmk48.test / admin123<br>demo@forumjmk48.test / demo123</p>
   </div>
 </div>
 <?php include __DIR__ . '/includes/footer.php'; ?>

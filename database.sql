@@ -76,7 +76,7 @@ INSERT INTO users (id, name, username, email, password, bio, role) VALUES
  'Halo! Ini akun demo.', 'user'),
 (3, 'Rani Putri', 'rani', 'rani@forumjmk48.test',
  '$2y$10$Ejqs7UON7cvxWjMCYJgUW.iYNHwPXBfuJfI0odYOteas3xTWwCwTG',
- 'Suka foto & kopi.', 'user');
+ 'Suka foto & kopi ☕', 'user');
 
 INSERT INTO posts (user_id, content) VALUES
 (2, 'Selamat datang di Forum JMK48! Ini postingan pertama. Coba posting teks + foto, like, dan komentar ya.'),
