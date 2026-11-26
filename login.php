@@ -21,7 +21,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 <div class="auth-wrap">
   <div class="card">
-    <div class="logo"><span class="logo-mark">◉</span> SosialKita</div>
+    <div class="logo"><span class="logo-mark">◉</span> Forum JMK48</div>
     <p class="muted">Masuk untuk posting, like, dan komentar.</p>
     <?php if ($error): ?><div class="alert error"><?= e($error) ?></div><?php endif; ?>
     <form method="post">
@@ -32,7 +32,7 @@ include __DIR__ . '/includes/header.php';
       <button class="btn btn-primary btn-block" type="submit">Masuk</button>
     </form>
     <p style="margin-top:14px;text-align:center">Belum punya akun? <a href="register.php">Daftar dulu</a></p>
-    <p class="muted" style="text-align:center;font-size:13px">Akun demo — admin@sosialkita.test / admin123<br>demo@sosialkita.test / demo123</p>
+    <p class="muted" style="text-align:center;font-size:13px">Akun demo — admin@forumjmk48.test / admin123<br>demo@forumjmk48.test / demo123</p>
   </div>
 </div>
 <?php include __DIR__ . '/includes/footer.php'; ?>

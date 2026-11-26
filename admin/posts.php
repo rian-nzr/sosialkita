@@ -38,7 +38,7 @@ $posts = $stmt->fetchAll();
 include __DIR__ . '/../includes/header.php';
 ?>
 <div class="container wide" style="padding:0">
-  <p style="margin-top:16px"><a href="../index.php">← Beranda SosialKita</a></p>
+  <p style="margin-top:16px"><a href="../index.php">← Beranda Forum JMK48</a></p>
   <h1 style="margin-top:8px">📝 Kelola Postingan</h1>
   <div class="admin-tabs">
     <a href="index.php">📊 Dashboard</a>

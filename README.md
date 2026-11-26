@@ -1,4 +1,4 @@
-# 💬 SosialKita — Website Sosial Media (PHP + MySQL)
+# 💬 Forum JMK48 — Website Sosial Media (PHP + MySQL)
 
 Proyek akhir: website sosial media / forum sederhana.
 User bisa posting teks + foto, like, dan komentar. Admin memantau semuanya lewat dashboard.
@@ -39,7 +39,7 @@ navigasi hanya lewat bottom nav pill gelap dengan tombol + (FAB) biru di tengah.
 ## 🗂️ Struktur folder
 
 ```
-sosialkita/
+forumjmk48/
 ├── config.php            # koneksi database (UBAH user/pass di sini)
 ├── database.sql          # skema database — import dulu
 ├── seed.php              # JALANKAN SEKALI, lalu HAPUS — bikin akun demo
@@ -64,12 +64,12 @@ sosialkita/
 
 ## 🚀 Cara jalanin di XAMPP (lokal)
 
-1. Copy folder `sosialkita` ke `C:\xampp\htdocs\` (Windows) atau `/Applications/XAMPP/htdocs/` (Mac).
+1. Copy folder `forumjmk48` ke `C:\xampp\htdocs\` (Windows) atau `/Applications/XAMPP/htdocs/` (Mac).
 2. Jalankan **Apache** dan **MySQL** dari XAMPP Control Panel.
 3. Buka `http://localhost/phpmyadmin` → tab **Import** → pilih `database.sql` → **Go**.
-   Database `sosialkita` + 4 tabel (`users`, `posts`, `comments`, `likes`) akan dibuat.
-4. Buka `http://localhost/sosialkita/seed.php` **sekali** untuk membuat akun demo, lalu **hapus file `seed.php`**.
-5. Buka `http://localhost/sosialkita/` — selesai.
+   Database `forumjmk48` + 4 tabel (`users`, `posts`, `comments`, `likes`) akan dibuat.
+4. Buka `http://localhost/forumjmk48/seed.php` **sekali** untuk membuat akun demo, lalu **hapus file `seed.php`**.
+5. Buka `http://localhost/forumjmk48/` — selesai.
 
 > Kalau MySQL kamu pakai password (bukan root kosong), ubah `DB_USER` / `DB_PASS` di `config.php`.
 
@@ -77,9 +77,9 @@ sosialkita/
 
 | Role  | Email | Password |
 |-------|-------|----------|
-| Admin | admin@sosialkita.test | admin123 |
-| User  | demo@sosialkita.test | demo123 |
-| User  | rani@sosialkita.test | rani123 |
+| Admin | admin@forumjmk48.test | admin123 |
+| User  | demo@forumjmk48.test | demo123 |
+| User  | rani@forumjmk48.test | rani123 |
 
 ## 🗄️ Database
 
@@ -93,7 +93,7 @@ sosialkita/
 Opsi paling gampang untuk PHP + MySQL:
 
 1. **InfinityFree** (infinityfree.com) — gratis, ada MySQL + PHP.
-   Daftar → buat domain `namamu.infinityfreeapp.com` → buka **File Manager**, upload isi folder `sosialkita` ke `htdocs/` → buka **MySQL Databases**, buat database → buka **phpMyAdmin**, import `database.sql` → ubah `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS` di `config.php` sesuai yang dikasih InfinityFree → jalankan `namadomainmu/seed.php` sekali, lalu hapus `seed.php`.
+   Daftar → buat domain `namamu.infinityfreeapp.com` → buka **File Manager**, upload isi folder `forumjmk48` ke `htdocs/` → buka **MySQL Databases**, buat database → buka **phpMyAdmin**, import `database.sql` → ubah `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS` di `config.php` sesuai yang dikasih InfinityFree → jalankan `namadomainmu/seed.php` sekali, lalu hapus `seed.php`.
 2. **000webhost / ByetHost / AwardSpace** — langkahnya sama: upload file, buat DB, import SQL, sesuaikan config.
 3. Jangan lupa: hapus `seed.php` setelah dipakai, dan jangan upload file `.zip` berisi password asli.
 

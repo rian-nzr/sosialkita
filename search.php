@@ -41,7 +41,7 @@ if ($q !== '') {
 include __DIR__ . '/includes/header.php';
 ?>
 <div class="card pad" style="text-align:center">
-  <div class="logo" style="justify-content:center;margin-bottom:12px"><span class="logo-mark">◉</span> SosialKita</div>
+  <div class="logo" style="justify-content:center;margin-bottom:12px"><span class="logo-mark">◉</span> Forum JMK48</div>
   <form method="get" style="display:flex;gap:8px">
     <input type="text" name="q" value="<?= e($q) ?>" placeholder="Cari pengguna atau postingan..." autofocus>
     <button class="btn btn-primary" type="submit">Cari</button>

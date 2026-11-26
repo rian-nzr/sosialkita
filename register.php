@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare('INSERT INTO users (name, username, email, password) VALUES (?,?,?,?)');
             $stmt->execute([$name, $username, $email, password_hash($password, PASSWORD_DEFAULT)]);
             $_SESSION['user_id'] = (int) $pdo->lastInsertId();
-            flash('Selamat datang di SosialKita, ' . $name . '! 🎉');
+            flash('Selamat datang di Forum JMK48, ' . $name . '! 🎉');
             redirect('index.php');
         }
     }
@@ -31,7 +31,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 <div class="auth-wrap">
   <div class="card">
-    <div class="logo"><span class="logo-mark">◉</span> SosialKita</div>
+    <div class="logo"><span class="logo-mark">◉</span> Forum JMK48</div>
     <p class="muted">Daftar gratis, langsung bisa posting.</p>
     <?php if ($error): ?><div class="alert error"><?= e($error) ?></div><?php endif; ?>
     <form method="post">

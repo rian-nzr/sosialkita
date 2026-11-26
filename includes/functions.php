@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// SosialKita — functions.php (helper)
+// Forum JMK48 — functions.php (helper)
 // ============================================================
 
 function e($str) {

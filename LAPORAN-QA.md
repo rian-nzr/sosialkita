@@ -1,8 +1,8 @@
-# Laporan Pengujian (QA) — SosialKita
+# Laporan Pengujian (QA) — Forum JMK48
 
 | | |
 |---|---|
-| **Proyek** | SosialKita — website media sosial/forum (PHP + MySQL, tanpa framework) |
+| **Proyek** | Forum JMK48 — website media sosial/forum (PHP + MySQL, tanpa framework) |
 | **Tanggal pengujian** | 26 November 2026, 01:00–01:26 WIB |
 | **Penguji** | QA browser (Chrome, dijalankan di laptop pengembang) + verifikasi kode oleh pengembang |
 | **Lingkungan uji** | `http://127.0.0.1:8000/` (PHP built-in server + MySQL di laptop), Chrome desktop ~1456px, simulasi lebar HP (zoom 300%) |
@@ -57,12 +57,12 @@ beban, dan pengujian di browser selain Chrome.
 
 | Akun | Peran |
 |---|---|
-| `admin@sosialkita.test` / `admin123` | Admin |
-| `demo@sosialkita.test` / `demo123` | User biasa |
-| `rani@sosialkita.test` / `rani123` | User biasa |
+| `admin@forumjmk48.test` / `admin123` | Admin |
+| `demo@forumjmk48.test` / `demo123` | User biasa |
+| `rani@forumjmk48.test` / `rani123` | User biasa |
 
 Data tes dibuat dengan awalan `[QA]` (1 postingan, 1 komentar, 1 akun
-`qatester` / `qa@sosialkita.test`) dan **sudah dihapus/dibersihkan** setelah
+`qatester` / `qa@forumjmk48.test`) dan **sudah dihapus/dibersihkan** setelah
 pengujian: postingan & komentar `[QA]` dihapus, bio demo dikembalikan ke
 "Halo! Ini akun demo.", akun `qatester` dihapus lewat halaman admin.
 Tidak ada konten asli pengguna, akun admin, atau role admin yang diubah.
@@ -278,7 +278,7 @@ akhir cukup dengan cek manual singkat oleh pengguna: sebagai admin, klik
 | ID | Temuan | Status |
 |---|---|---|
 | NEW-2 | Di `post.php` lebar desktop, baris input komentar sempat setengah tertutup nav pill di tepi viewport sebelum di-scroll; hilang setelah scroll. | 📝 Kosmetik, tidak memblokir (BUG-05 sudah lolos). |
-| — | Overlay "sayang / Working..." yang menempel di atas layar selama pengujian dan menutupi toast | 📝 **Bukan bagian situs** — overlay alat browser QA (muncul lintas halaman bahkan setelah logout). Dicatat sebagai artefak alat, bukan bug SosialKita. |
+| — | Overlay "sayang / Working..." yang menempel di atas layar selama pengujian dan menutupi toast | 📝 **Bukan bagian situs** — overlay alat browser QA (muncul lintas halaman bahkan setelah logout). Dicatat sebagai artefak alat, bukan bug Forum JMK48. |
 
 ### 11.5 Keadaan akhir putaran 2
 

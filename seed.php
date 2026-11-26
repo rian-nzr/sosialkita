@@ -1,19 +1,19 @@
 <?php
 // ============================================================
-// SosialKita — seed.php
+// Forum JMK48 — seed.php
 // JALANKAN SEKALI SAJA di browser, lalu HAPUS file ini.
 // Membuat akun admin + demo dengan password yang benar.
 // ============================================================
 require_once __DIR__ . '/config.php';
 
 $accounts = [
-    ['Admin SosialKita', 'admin', 'admin@sosialkita.test', 'admin123', 'Akun admin — memantau semua postingan.', 'admin'],
-    ['Demo User', 'demo', 'demo@sosialkita.test', 'demo123', 'Halo! Ini akun demo.', 'user'],
-    ['Rani Putri', 'rani', 'rani@sosialkita.test', 'rani123', 'Suka foto & kopi ☕', 'user'],
+    ['Admin Forum JMK48', 'admin', 'admin@forumjmk48.test', 'admin123', 'Akun admin — memantau semua postingan.', 'admin'],
+    ['Demo User', 'demo', 'demo@forumjmk48.test', 'demo123', 'Halo! Ini akun demo.', 'user'],
+    ['Rani Putri', 'rani', 'rani@forumjmk48.test', 'rani123', 'Suka foto & kopi ☕', 'user'],
 ];
 
 $posts = [
-    ['demo', 'Selamat datang di SosialKita! 🎉 Ini postingan pertama. Coba posting teks + foto, like, dan komentar ya.'],
+    ['demo', 'Selamat datang di Forum JMK48! 🎉 Ini postingan pertama. Coba posting teks + foto, like, dan komentar ya.'],
     ['rani', 'Hari ini langitnya bagus banget. Semoga harimu juga cerah! ☀️'],
     ['demo', 'Tips hari ini: jangan lupa minum air putih dan istirahat yang cukup.'],
 ];
@@ -39,9 +39,9 @@ foreach ($posts as [$username, $content]) {
   <div class="card" style="padding:28px;text-align:center">
     <h1>✅ Seed selesai</h1>
     <p>Akun yang bisa dipakai login:</p>
-    <p><b>Admin:</b> admin@sosialkita.test / admin123<br>
-       <b>User:</b> demo@sosialkita.test / demo123<br>
-       <b>User:</b> rani@sosialkita.test / rani123</p>
+    <p><b>Admin:</b> admin@forumjmk48.test / admin123<br>
+       <b>User:</b> demo@forumjmk48.test / demo123<br>
+       <b>User:</b> rani@forumjmk48.test / rani123</p>
     <p style="color:#dc2626"><b>Penting:</b> hapus file <code>seed.php</code> sekarang sebelum dikumpulkan / di-hosting.</p>
     <a class="btn btn-primary" href="login.php">Ke halaman login →</a>
   </div>
