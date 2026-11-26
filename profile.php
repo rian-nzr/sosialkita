@@ -66,7 +66,8 @@ include __DIR__ . '/includes/header.php';
         <a class="btn btn-sm" href="logout.php" style="margin-top:10px">Keluar</a>
       <?php endif; ?>
       <?php if ($user && ($user['id'] == $profile['id'] || $user['role'] === 'admin')): ?>
-        <form method="post" enctype="multipart/form-data" style="max-width:320px;margin-top:14px">
+        <button type="button" class="btn btn-sm" id="edit-profile-toggle" style="margin-top:10px"><?= !empty($error) ? '✕ Batal' : '✏️ Edit Profil' ?></button>
+        <form method="post" enctype="multipart/form-data" id="edit-profile-form" style="max-width:320px;margin-top:14px"<?= empty($error) ? ' hidden' : '' ?>>
           <?php if (!empty($error)): ?><div class="alert error"><?= e($error) ?></div><?php endif; ?>
           <label style="font-size:13px;font-weight:600">Nama</label>
           <input type="text" name="name" maxlength="100" required value="<?= e($profile['name']) ?>" style="margin:4px 0 10px">
@@ -108,4 +109,19 @@ include __DIR__ . '/includes/header.php';
     <?php endforeach; ?>
   </div>
 </div>
+<?php if ($user && ($user['id'] == $profile['id'] || $user['role'] === 'admin')): ?>
+<script>
+(function () {
+  var btn = document.getElementById('edit-profile-toggle');
+  var form = document.getElementById('edit-profile-form');
+  if (!btn || !form) return;
+  btn.addEventListener('click', function () {
+    var open = form.hidden;
+    form.hidden = !open;
+    btn.textContent = open ? '✕ Batal' : '✏️ Edit Profil';
+    if (open) form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+})();
+</script>
+<?php endif; ?>
 <?php include __DIR__ . '/includes/footer.php'; ?>
