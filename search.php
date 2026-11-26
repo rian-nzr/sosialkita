@@ -11,7 +11,7 @@ $suggestedUsers = [];
 if ($q === '') {
     // Postingan rekomendasi: paling banyak disukai dulu, lalu terbaru.
     $stmt = $pdo->query('
-        SELECT p.*, u.name, u.username,
+        SELECT p.*, u.name, u.username, u.avatar,
                (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count
         FROM posts p JOIN users u ON u.id = p.user_id
         ORDER BY like_count DESC, p.created_at DESC LIMIT 12');
@@ -19,18 +19,18 @@ if ($q === '') {
     // Pengguna yang disarankan: paling aktif posting, bukan diri sendiri.
     $me = currentUser();
     $stmt = $pdo->prepare('
-        SELECT u.id, u.name, u.username, u.bio, COUNT(p.id) AS post_count
+        SELECT u.id, u.name, u.username, u.bio, u.avatar, COUNT(p.id) AS post_count
         FROM users u LEFT JOIN posts p ON p.user_id = u.id
         WHERE u.id != ? GROUP BY u.id ORDER BY post_count DESC, u.name LIMIT 5');
     $stmt->execute([$me ? $me['id'] : 0]);
     $suggestedUsers = $stmt->fetchAll();
 }
 if ($q !== '') {
-    $stmt = $pdo->prepare('SELECT id, name, username, bio FROM users WHERE name LIKE ? OR username LIKE ? ORDER BY name LIMIT 10');
+    $stmt = $pdo->prepare('SELECT id, name, username, bio, avatar FROM users WHERE name LIKE ? OR username LIKE ? ORDER BY name LIMIT 10');
     $stmt->execute(["%$q%", "%$q%"]);
     $foundUsers = $stmt->fetchAll();
     $stmt = $pdo->prepare('
-        SELECT p.*, u.name, u.username,
+        SELECT p.*, u.name, u.username, u.avatar,
                (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count,
                (SELECT COUNT(*) FROM comments WHERE post_id = p.id) AS comment_count
         FROM posts p JOIN users u ON u.id = p.user_id
@@ -54,7 +54,7 @@ include __DIR__ . '/includes/header.php';
   <?php foreach ($foundUsers as $u): ?>
     <a href="profile.php?u=<?= e($u['username']) ?>">
       <div class="card pad" style="display:flex;gap:12px;align-items:center">
-        <div class="avatar"><?= e(strtoupper(substr($u['name'], 0, 1))) ?></div>
+        <?= avatarHtml($u) ?>
         <div><b><?= e($u['username']) ?></b><br><span class="muted"><?= e($u['name']) ?> · <?= e($u['bio'] ?: 'Belum ada bio.') ?></span></div>
       </div>
     </a>
@@ -65,7 +65,7 @@ include __DIR__ . '/includes/header.php';
   <?php foreach ($foundPosts as $p): ?>
     <article class="card">
       <div class="post-head">
-        <a href="profile.php?u=<?= e($p['username']) ?>"><div class="avatar"><?= e(strtoupper(substr($p['name'], 0, 1))) ?></div></a>
+        <a href="profile.php?u=<?= e($p['username']) ?>"><?= avatarHtml($p) ?></a>
         <div class="post-meta">
           <b><a href="profile.php?u=<?= e($p['username']) ?>"><?= e($p['username']) ?></a></b>
           <span><?= e(timeAgo($p['created_at'])) ?></span>
@@ -89,7 +89,7 @@ include __DIR__ . '/includes/header.php';
     <?php foreach ($suggestedUsers as $u): ?>
       <a href="profile.php?u=<?= e($u['username']) ?>">
         <div class="card pad" style="display:flex;gap:12px;align-items:center">
-          <div class="avatar"><?= e(strtoupper(substr($u['name'], 0, 1))) ?></div>
+          <?= avatarHtml($u) ?>
           <div style="flex:1;min-width:0">
             <b><?= e($u['username']) ?></b><br>
             <span class="muted"><?= e($u['name']) ?> · <?= (int)$u['post_count'] ?> postingan<?= $u['bio'] ? ' · ' . e($u['bio']) : '' ?></span>

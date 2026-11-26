@@ -16,7 +16,7 @@ function currentUser(): ?array {
     if (!isLoggedIn()) return null;
     static $user = null;
     if ($user === null) {
-        $stmt = $pdo->prepare('SELECT id, name, username, email, bio, role, created_at FROM users WHERE id = ?');
+        $stmt = $pdo->prepare('SELECT id, name, username, email, bio, avatar, role, created_at FROM users WHERE id = ?');
         $stmt->execute([$_SESSION['user_id']]);
         $user = $stmt->fetch() ?: null;
     }
@@ -142,4 +142,19 @@ function excerpt(string $s, int $len): string {
     $sp = $strrpos($cut, ' ');
     if ($sp !== false && $sp > $len * 0.5) $cut = $substr($cut, 0, $sp);
     return $cut . '…';
+}
+
+// Avatar pengguna: foto profil kalau ada, kalau belum diupload tampil
+// huruf pertama nama di lingkaran gradien (perilaku lama).
+// $extra = kelas tambahan, mis. 'lg' untuk avatar besar di halaman profil.
+// $base adalah '../' di halaman /admin/ (lihat header.php), '' di root.
+function avatarHtml(array $u, string $extra = ''): string {
+    $base = $GLOBALS['base'] ?? '';
+    $cls = trim('avatar ' . $extra);
+    $name = (string) ($u['name'] ?? '?');
+    if (!empty($u['avatar'])) {
+        return '<div class="' . e($cls) . '"><img src="' . $base . 'uploads/' . e($u['avatar']) . '" alt="Foto ' . e($name) . '"></div>';
+    }
+    $initial = function_exists('mb_substr') ? mb_substr($name, 0, 1, 'UTF-8') : substr($name, 0, 1);
+    return '<div class="' . e($cls) . '">' . e(strtoupper($initial)) . '</div>';
 }

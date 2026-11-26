@@ -11,7 +11,7 @@ $stats = [
     'Like'      => (int) $pdo->query('SELECT COUNT(*) FROM likes')->fetchColumn(),
 ];
 $recentPosts = $pdo->query('
-    SELECT p.*, u.name, u.username,
+    SELECT p.*, u.name, u.username, u.avatar,
            (SELECT COUNT(*) FROM comments WHERE post_id = p.id) AS comment_count,
            (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count
     FROM posts p JOIN users u ON u.id = p.user_id
@@ -43,7 +43,7 @@ include __DIR__ . '/../includes/header.php';
     <?php if (!$recentPosts): ?><p class="empty">Belum ada postingan.</p><?php endif; ?>
     <?php foreach ($recentPosts as $p): ?>
       <div class="list-row">
-        <div class="avatar"><?= e(strtoupper(substr($p['name'], 0, 1))) ?></div>
+        <?= avatarHtml($p) ?>
         <div class="list-body">
           <b><?= e($p['name']) ?></b> <span class="list-meta">@<?= e($p['username']) ?> · <?= e(timeAgo($p['created_at'])) ?></span>
           <p><?= e(excerpt($p['content'], 120)) ?></p>
@@ -59,7 +59,7 @@ include __DIR__ . '/../includes/header.php';
     <div class="card-head"><h2>Pengguna terbaru</h2></div>
     <?php foreach ($recentUsers as $u): ?>
       <div class="list-row">
-        <div class="avatar"><?= e(strtoupper(substr($u['name'], 0, 1))) ?></div>
+        <?= avatarHtml($u) ?>
         <div class="list-body">
           <b><?= e($u['name']) ?></b> <span class="list-meta">@<?= e($u['username']) ?> · <?= e($u['role']) ?> · <?= e(timeAgo($u['created_at'])) ?></span>
         </div>

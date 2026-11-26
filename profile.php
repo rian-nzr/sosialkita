@@ -1,20 +1,42 @@
 <?php
 require_once __DIR__ . '/config.php';
 $username = $_GET['u'] ?? '';
-$stmt = $pdo->prepare('SELECT id, name, username, email, bio, role, created_at FROM users WHERE username = ?');
+$stmt = $pdo->prepare('SELECT id, name, username, email, bio, avatar, role, created_at FROM users WHERE username = ?');
 $stmt->execute([$username]);
 $profile = $stmt->fetch();
 if (!$profile) { flash('Pengguna tidak ditemukan.', 'error'); redirect('index.php'); }
 $pageTitle = '@' . $profile['username'];
 $user = currentUser();
 
-// Edit bio (pemilik profil / admin)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_bio']) && $user && ($user['id'] == $profile['id'] || $user['role'] === 'admin')) {
+// Edit profil: nama + bio + foto profil (pemilik profil / admin).
+// Username TIDAK bisa diganti — dipakai di URL profil (?u=...) dan harus unik.
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_profile']) && $user && ($user['id'] == $profile['id'] || $user['role'] === 'admin')) {
+    $name = trim($_POST['name'] ?? '');
     $bio = trim($_POST['bio'] ?? '');
-    $stmt = $pdo->prepare('UPDATE users SET bio = ? WHERE id = ?');
-    $stmt->execute([substr($bio, 0, 255), $profile['id']]);
-    flash('Bio berhasil disimpan.');
-    redirect('profile.php?u=' . $profile['username']);
+    if ($name === '') $error = 'Nama tidak boleh kosong.';
+    elseif ((function_exists('mb_strlen') ? mb_strlen($name) : strlen($name)) > 100) $error = 'Nama maksimal 100 karakter.';
+    $avatar = $profile['avatar'] ?? null;
+    if (!$error && !empty($_POST['remove_avatar'])) {
+        deleteImage($avatar);
+        $avatar = null;
+    }
+    if (!$error) {
+        $newAvatar = uploadImage($_FILES['avatar'] ?? [], $error);
+        if (!$error && $newAvatar) {
+            deleteImage($avatar);
+            $avatar = $newAvatar;
+        }
+    }
+    if (!$error) {
+        $stmt = $pdo->prepare('UPDATE users SET name = ?, bio = ?, avatar = ? WHERE id = ?');
+        $stmt->execute([$name, substr($bio, 0, 255), $avatar, $profile['id']]);
+        flash('Profil berhasil disimpan.');
+        redirect('profile.php?u=' . $profile['username']);
+    }
+    // Gagal validasi: tampilkan lagi isian yang sudah diketik.
+    $profile['name'] = $name;
+    $profile['bio'] = $bio;
 }
 
 $stmt = $pdo->prepare('
@@ -27,7 +49,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 <div class="container wide" style="padding:0">
   <div class="profile-head">
-    <div class="avatar lg"><?= e(strtoupper(substr($profile['name'], 0, 1))) ?></div>
+    <?= avatarHtml($profile, 'lg') ?>
     <div class="profile-info">
       <h1><?= e($profile['username']) ?></h1>
       <div class="profile-stats">
@@ -44,9 +66,27 @@ include __DIR__ . '/includes/header.php';
         <a class="btn btn-sm" href="logout.php" style="margin-top:10px">Keluar</a>
       <?php endif; ?>
       <?php if ($user && ($user['id'] == $profile['id'] || $user['role'] === 'admin')): ?>
-        <form method="post" style="max-width:320px;margin-top:10px">
-          <input type="text" name="bio" maxlength="255" value="<?= e($profile['bio'] ?? '') ?>" placeholder="Edit bio...">
-          <button class="btn btn-primary btn-sm" type="submit" name="save_bio" style="margin-top:8px">Simpan bio</button>
+        <form method="post" enctype="multipart/form-data" style="max-width:320px;margin-top:14px">
+          <?php if (!empty($error)): ?><div class="alert error"><?= e($error) ?></div><?php endif; ?>
+          <label style="font-size:13px;font-weight:600">Nama</label>
+          <input type="text" name="name" maxlength="100" required value="<?= e($profile['name']) ?>" style="margin:4px 0 10px">
+          <label style="font-size:13px;font-weight:600">Bio</label>
+          <input type="text" name="bio" maxlength="255" value="<?= e($profile['bio'] ?? '') ?>" placeholder="Ceritakan sedikit tentangmu..." style="margin:4px 0 10px">
+          <label style="font-size:13px;font-weight:600">Foto profil</label>
+          <div style="display:flex;gap:10px;align-items:center;margin:6px 0 10px">
+            <?= avatarHtml($profile) ?>
+            <label style="margin:0;font-weight:400;color:var(--muted);cursor:pointer"><span class="file-label-text">📷 <?= !empty($profile['avatar']) ? 'Ganti foto' : 'Pilih foto' ?></span> <input type="file" name="avatar" accept="image/*" style="display:none" data-preview="avatar-preview-wrap"></label>
+          </div>
+          <div class="img-preview-wrap" id="avatar-preview-wrap" hidden>
+            <img alt="Pratinjau foto profil">
+            <button type="button" class="img-preview-remove" data-preview-remove title="Batalkan foto">✕</button>
+            <p class="img-preview-note">Pratinjau — foto baru disimpan setelah kamu tekan Simpan profil.</p>
+          </div>
+          <?php if (!empty($profile['avatar'])): ?>
+            <label style="font-weight:400;color:var(--muted);font-size:13px;display:block;margin-bottom:10px"><input type="checkbox" name="remove_avatar" value="1"> Hapus foto profil (kembali ke huruf awal)</label>
+          <?php endif; ?>
+          <button class="btn btn-primary btn-sm" type="submit" name="save_profile">Simpan profil</button>
+          <p class="muted" style="font-size:12px;margin-top:8px">Username @<?= e($profile['username']) ?> tidak bisa diganti. Foto maksimal 2 MB (JPG/PNG/GIF/WebP).</p>
         </form>
       <?php endif; ?>
     </div>

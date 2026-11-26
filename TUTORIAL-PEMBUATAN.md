@@ -38,7 +38,7 @@ forumjmk48/
 
 `database.sql` membuat 4 tabel:
 
-- **users** — nama, username, email, password (hash), bio, role (`user`/`admin`)
+- **users** — nama, username, email, password (hash), bio, avatar (nama file foto profil), role (`user`/`admin`)
 - **posts** — user_id, isi teks, nama file foto
 - **comments** — post_id, user_id, isi komentar
 - **likes** — post_id + user_id (unik, tidak bisa like 2x)
@@ -59,7 +59,7 @@ forumjmk48/
    - Posting: teks + foto (JPG/PNG/GIF/WebP, maks 2 MB, nama file acak),
      pratinjau foto sebelum upload, edit/hapus postingan sendiri.
    - Interaksi: like/unlike, komentar + edit/hapus komentar.
-   - Profil: bio bisa diedit, grid postingan.
+   - Profil: nama, bio & foto profil bisa diedit (pratinjau sebelum simpan), grid postingan.
    - Pencarian & Explore: cari pengguna/postingan, halaman Jelajahi.
    - Aktivitas: daftar like & komentar di postingan sendiri.
    - Admin: dashboard statistik + kelola postingan, komentar, pengguna

@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_post'])) {
 $searchQ = trim($_GET['q'] ?? '');
 if ($searchQ !== '') {
     $stmt = $pdo->prepare("
-        SELECT p.*, u.name, u.username,
+        SELECT p.*, u.name, u.username, u.avatar,
                (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count,
                (SELECT COUNT(*) FROM comments WHERE post_id = p.id) AS comment_count
         FROM posts p JOIN users u ON u.id = p.user_id
@@ -36,7 +36,7 @@ if ($searchQ !== '') {
     $stmt->execute(["%$searchQ%", "%$searchQ%", "%$searchQ%"]);
 } else {
     $stmt = $pdo->query("
-        SELECT p.*, u.name, u.username,
+        SELECT p.*, u.name, u.username, u.avatar,
                (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count,
                (SELECT COUNT(*) FROM comments WHERE post_id = p.id) AS comment_count
         FROM posts p JOIN users u ON u.id = p.user_id
@@ -54,7 +54,7 @@ include __DIR__ . '/includes/header.php';
 <?php if ($user): ?>
   <?php $hour = (int)date('G'); $greet = $hour < 11 ? 'Selamat pagi' : ($hour < 15 ? 'Selamat siang' : ($hour < 18 ? 'Selamat sore' : 'Selamat malam')); ?>
   <div class="greeting">
-    <div class="avatar"><?= e(strtoupper(substr($user['name'], 0, 1))) ?></div>
+    <?= avatarHtml($user) ?>
     <div>
       <p><?= e($greet) ?> 👋</p>
       <h1><?= e($user['name']) ?></h1>
@@ -64,12 +64,12 @@ include __DIR__ . '/includes/header.php';
   </div>
   <div class="stories">
     <a class="story" href="profile.php?u=<?= e($user['username']) ?>">
-      <div class="ring"><div class="avatar"><?= e(strtoupper(substr($user['name'], 0, 1))) ?></div></div>
+      <div class="ring"><?= avatarHtml($user) ?></div>
       <span>Cerita Anda</span>
     </a>
     <?php foreach ($storyUsers as $su): if ($su['username'] === $user['username']) continue; ?>
     <a class="story" href="profile.php?u=<?= e($su['username']) ?>">
-      <div class="ring"><div class="avatar"><?= e(strtoupper(substr($su['name'], 0, 1))) ?></div></div>
+      <div class="ring"><?= avatarHtml($su) ?></div>
       <span><?= e($su['username']) ?></span>
     </a>
     <?php endforeach; ?>
@@ -78,7 +78,7 @@ include __DIR__ . '/includes/header.php';
   <div class="card pad" id="composer">
     <form method="post" enctype="multipart/form-data">
       <div style="display:flex;gap:10px;align-items:center">
-        <div class="avatar"><?= e(strtoupper(substr($user['name'], 0, 1))) ?></div>
+        <?= avatarHtml($user) ?>
         <input type="text" name="content" placeholder="Buat postingan baru, <?= e($user['name']) ?>..." required style="border:none;background:transparent;flex:1" maxlength="2000">
       </div>
       <?php if (!empty($error)): ?><div class="alert error"><?= e($error) ?></div><?php endif; ?>
@@ -114,7 +114,7 @@ include __DIR__ . '/includes/header.php';
 <?php foreach ($posts as $p): $liked = $user ? userLiked((int)$p['id'], (int)$user['id']) : false; ?>
   <article class="card">
     <div class="post-head">
-      <a href="profile.php?u=<?= e($p['username']) ?>"><div class="avatar"><?= e(strtoupper(substr($p['name'], 0, 1))) ?></div></a>
+      <a href="profile.php?u=<?= e($p['username']) ?>"><?= avatarHtml($p) ?></a>
       <div class="post-meta">
         <b><a href="profile.php?u=<?= e($p['username']) ?>"><?= e($p['username']) ?></a></b>
         <span><?= e(timeAgo($p['created_at'])) ?><?= $p['updated_at'] !== $p['created_at'] ? ' · diedit' : '' ?></span>

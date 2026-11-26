@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_comment'])) {
 
 // --- Ambil postingan ---
 $stmt = $pdo->prepare('
-    SELECT p.*, u.name, u.username,
+    SELECT p.*, u.name, u.username, u.avatar,
            (SELECT COUNT(*) FROM likes WHERE post_id = p.id) AS like_count
     FROM posts p JOIN users u ON u.id = p.user_id WHERE p.id = ?');
 $stmt->execute([$id]);
@@ -29,7 +29,7 @@ $pageTitle = 'Postingan @' . $post['username'];
 
 // --- Ambil komentar ---
 $stmt = $pdo->prepare('
-    SELECT c.*, u.name, u.username FROM comments c
+    SELECT c.*, u.name, u.username, u.avatar FROM comments c
     JOIN users u ON u.id = c.user_id WHERE c.post_id = ?
     ORDER BY c.created_at ASC');
 $stmt->execute([$id]);
@@ -41,7 +41,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 <article class="card">
   <div class="post-head">
-    <a href="profile.php?u=<?= e($post['username']) ?>"><div class="avatar"><?= e(strtoupper(substr($post['name'], 0, 1))) ?></div></a>
+    <a href="profile.php?u=<?= e($post['username']) ?>"><?= avatarHtml($post) ?></a>
     <div class="post-meta">
       <b><a href="profile.php?u=<?= e($post['username']) ?>"><?= e($post['username']) ?></a></b>
       <span><?= e(timeAgo($post['created_at'])) ?><?= $post['updated_at'] !== $post['created_at'] ? ' · diedit' : '' ?></span>
@@ -92,7 +92,7 @@ include __DIR__ . '/includes/header.php';
   <?php if (!$comments): ?><p class="empty">Belum ada komentar. Jadilah yang pertama!</p><?php endif; ?>
   <?php foreach ($comments as $c): ?>
     <div class="comment">
-      <div class="avatar"><?= e(strtoupper(substr($c['name'], 0, 1))) ?></div>
+      <?= avatarHtml($c) ?>
       <div class="comment-body">
         <b><?= e($c['username']) ?></b> <?= e($c['content']) ?>
         <?php if ($editCommentId === (int)$c['id'] && $user && ($user['id'] == $c['user_id'] || $user['role'] === 'admin')): ?>

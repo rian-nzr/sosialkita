@@ -32,7 +32,7 @@ tiap baris: lakukan langkahnya, bandingkan dengan hasil yang diharapkan.
 | 10 | Hapus komentar | Hapus komentar sendiri | Komentar hilang + toast sukses |
 | 11 | Edit postingan | Edit postingan sendiri | Tersimpan + label "diedit" |
 | 12 | Hapus postingan | Hapus postingan dari detailnya | Postingan hilang + toast "Postingan berhasil dihapus." |
-| 13 | Profil | Buka profil sendiri → edit bio | Bio tersimpan |
+| 13 | Profil | Buka profil sendiri → ubah nama, bio, dan foto profil | Tersimpan + toast "Profil berhasil disimpan."; foto muncul di semua tempat (feed, komentar, dashboard) |
 | 14 | Profil orang | Buka profil rani | Tampil bio + postingan, tanpa tombol edit |
 | 15 | Cari pengguna | Cari "rani" | 1 pengguna ditemukan |
 | 16 | Cari postingan | Cari kata di tengah caption | Postingan ditemukan (bukan cuma awal kata) |
@@ -48,6 +48,7 @@ tiap baris: lakukan langkahnya, bandingkan dengan hasil yang diharapkan.
 | 26 | Guest ke admin | Logout → buka `/admin/index.php` | Dialihkan ke halaman login |
 | 27 | Mode gelap | Jelajahi semua halaman | Semua halaman gelap, teks terbaca |
 | 28 | Responsif | Kecilkan jendela ke ~480px | Tidak ada teks kepotong / tombol ketutup / scroll samping |
+| 29 | Hapus foto profil | Buka profil sendiri → centang "Hapus foto profil" → Simpan | Avatar kembali ke huruf awal; file foto lama terhapus |
 
 ## 3. Cara Melaporkan Temuan
 

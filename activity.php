@@ -8,7 +8,7 @@ $pageTitle = 'Aktivitas';
 
 // Like terbaru di postingan milik user
 $stmt = $pdo->prepare('
-    SELECT l.created_at, u.name, u.username, p.id AS post_id,
+    SELECT l.created_at, u.name, u.username, u.avatar, p.id AS post_id,
            LEFT(p.content, 60) AS post_content
     FROM likes l
     JOIN posts p ON p.id = l.post_id
@@ -20,7 +20,7 @@ $likes = $stmt->fetchAll();
 
 // Komentar terbaru di postingan milik user
 $stmt = $pdo->prepare('
-    SELECT c.created_at, c.content, u.name, u.username, p.id AS post_id,
+    SELECT c.created_at, c.content, u.name, u.username, u.avatar, p.id AS post_id,
            LEFT(p.content, 60) AS post_content
     FROM comments c
     JOIN posts p ON p.id = c.post_id
@@ -43,7 +43,7 @@ include __DIR__ . '/includes/header.php';
 
 <?php foreach ($likes as $l): ?>
   <div class="card pad" style="display:flex;gap:12px;align-items:center">
-    <div class="avatar"><?= e(strtoupper(substr($l['name'], 0, 1))) ?></div>
+    <?= avatarHtml($l) ?>
     <div style="flex:1">
       <b><?= e($l['username']) ?></b> menyukai postinganmu
       <span class="muted">— "<?= e($l['post_content']) ?>…"</span><br>
@@ -55,7 +55,7 @@ include __DIR__ . '/includes/header.php';
 
 <?php foreach ($comments as $c): ?>
   <div class="card pad" style="display:flex;gap:12px;align-items:center">
-    <div class="avatar"><?= e(strtoupper(substr($c['name'], 0, 1))) ?></div>
+    <?= avatarHtml($c) ?>
     <div style="flex:1">
       <b><?= e($c['username']) ?></b> mengomentari postinganmu: "<?= e($c['content']) ?>"
       <span class="muted">— di "<?= e($c['post_content']) ?>…"</span><br>
