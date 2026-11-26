@@ -93,7 +93,7 @@ forumjmk48/
 Opsi paling gampang untuk PHP + MySQL:
 
 1. **InfinityFree** (infinityfree.com) — gratis, ada MySQL + PHP.
-   Daftar → buat domain `namamu.infinityfreeapp.com` → buka **File Manager**, upload isi folder `forumjmk48` ke `htdocs/` → buka **MySQL Databases**, buat database → buka **phpMyAdmin**, import `database.sql` → ubah `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS` di `config.php` sesuai yang dikasih InfinityFree → jalankan `namadomainmu/seed.php` sekali, lalu hapus `seed.php`.
+   Daftar → buat domain `namamu.infinityfreeapp.com` → buka **File Manager**, upload isi folder `forumjmk48` ke `htdocs/` → buka **MySQL Databases**, buat database → buka **phpMyAdmin**, import `database-hosting.sql` (bukan `database.sql` — versi hosting ini tanpa baris `CREATE DATABASE`/`USE`, karena user MySQL hosting tidak boleh membuat database) → ubah `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS` di `config.php` sesuai yang dikasih InfinityFree → hapus `seed.php` (tidak perlu dijalankan — akun demo sudah ikut ter-import).
 2. **000webhost / ByetHost / AwardSpace** — langkahnya sama: upload file, buat DB, import SQL, sesuaikan config.
 3. Jangan lupa: hapus `seed.php` setelah dipakai, dan jangan upload file `.zip` berisi password asli.
 
