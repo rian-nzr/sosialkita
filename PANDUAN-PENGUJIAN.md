@@ -24,15 +24,16 @@ tiap baris: lakukan langkahnya, bandingkan dengan hasil yang diharapkan.
 | 2 | Register | Daftar akun baru | Berhasil + langsung login |
 | 3 | Login benar | Login sebagai demo | Masuk ke beranda + toast sambutan |
 | 4 | Login salah | Password salah | Pesan "Email atau password salah." |
-| 5 | Posting teks | Tulis teks → Kirim | Postingan muncul di puncak feed |
-| 6 | Posting foto | Pilih foto → lihat pratinjau → Kirim | Pratinjau tampil, foto ikut tayang |
-| 7 | Like | Klik hati, lalu klik lagi | Like bertambah lalu berkurang |
+| 5 | Posting teks | Klik tombol **+** di nav bawah → tulis teks di halaman Buat postingan → Bagikan | Postingan muncul di puncak feed + toast "Postinganmu sudah tayang! 🎉" |
+| 6 | Posting foto | Di halaman Buat postingan: pilih foto → lihat pratinjau → Bagikan | Pratinjau tampil, foto ikut tayang |
+| 7 | Like | Klik hati, lalu klik lagi | Like bertambah lalu berkurang; **halaman TIDAK reload, scroll tetap di postingan itu**, hati langsung merah |
+| 30 | Double-tap like | Ketuk 2x cepat pada foto/kotak teks postingan | Postingan ter-like (hati merah) + animasi hati besar muncul lalu hilang; double-tap lagi tidak unlike |
 | 8 | Komentar | Tulis komentar → Kirim | Komentar muncul + hitungan naik |
 | 9 | Edit komentar | Edit komentar sendiri | Tersimpan + label "diedit" |
 | 10 | Hapus komentar | Hapus komentar sendiri | Komentar hilang + toast sukses |
 | 11 | Edit postingan | Edit postingan sendiri | Tersimpan + label "diedit" |
 | 12 | Hapus postingan | Hapus postingan dari detailnya | Postingan hilang + toast "Postingan berhasil dihapus." |
-| 13 | Profil | Buka profil sendiri → ubah nama, bio, dan foto profil | Tersimpan + toast "Profil berhasil disimpan."; foto muncul di semua tempat (feed, komentar, dashboard) |
+| 13 | Profil | Buka profil sendiri → klik "✏️ Edit Profil" (form tersembunyi sebelum ditekan) → ubah nama, bio, dan foto profil | Tersimpan + toast "Profil berhasil disimpan."; foto muncul di semua tempat (feed, komentar, dashboard) |
 | 14 | Profil orang | Buka profil rani | Tampil bio + postingan, tanpa tombol edit |
 | 15 | Cari pengguna | Cari "rani" | 1 pengguna ditemukan |
 | 16 | Cari postingan | Cari kata di tengah caption | Postingan ditemukan (bukan cuma awal kata) |

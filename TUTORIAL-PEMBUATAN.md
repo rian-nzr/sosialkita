@@ -20,17 +20,18 @@ forumjmk48/
 ├── config.php          # Koneksi database + nama aplikasi
 ├── database.sql        # Struktur 4 tabel + 3 akun seed
 ├── seed.php            # Pembuat akun demo (jalankan sekali, lalu hapus)
-├── index.php           # Feed + form posting
+├── index.php           # Feed
+├── create.php          # Halaman khusus buat postingan
 ├── login.php / register.php / logout.php
 ├── post.php            # Detail postingan + komentar
 ├── edit_post.php / delete_post.php
 ├── edit_comment.php / delete_comment.php
-├── like.php            # Like / unlike
+├── like.php            # Like / unlike (balas JSON kalau dipanggil AJAX)
 ├── profile.php / search.php / activity.php
 ├── admin/              # Dashboard + kelola postingan, komentar, pengguna
 ├── includes/           # functions.php, header.php, footer.php
 ├── assets/css/style.css
-├── assets/js/          # Pratinjau foto + toast
+├── assets/js/          # Pratinjau foto + toast + like (AJAX & double-tap)
 └── uploads/            # Foto postingan (file .php diblokir .htaccess)
 ```
 
@@ -56,10 +57,16 @@ forumjmk48/
 5. **Bangun fitur** (sudah jadi di proyek ini):
    - Autentikasi: register/login/logout, password di-hash (`password_hash`),
      semua query pakai PDO prepared statement (aman dari SQL injection).
-   - Posting: teks + foto (JPG/PNG/GIF/WebP, maks 2 MB, nama file acak),
+   - Posting: lewat halaman khusus `create.php` (tombol **+** di bottom nav) —
+     teks + foto (JPG/PNG/GIF/WebP, maks 2 MB, nama file acak),
      pratinjau foto sebelum upload, edit/hapus postingan sendiri.
-   - Interaksi: like/unlike, komentar + edit/hapus komentar.
-   - Profil: nama, bio & foto profil bisa diedit (pratinjau sebelum simpan), grid postingan.
+   - Interaksi: like/unlike **tanpa reload** (AJAX — hati langsung merah,
+     jumlah langsung berubah, posisi scroll tetap), **double-tap foto/teks
+     postingan untuk like** (ala Instagram, ada animasi hati besar);
+     komentar + edit/hapus komentar.
+   - Profil: nama, bio & foto profil bisa diedit (form tersembunyi di balik
+     tombol "✏️ Edit Profil", baru muncul saat ditekan; pratinjau foto
+     sebelum simpan), foto profil tampil bulat, grid postingan.
    - Pencarian & Explore: cari pengguna/postingan, halaman Jelajahi.
    - Aktivitas: daftar like & komentar di postingan sendiri.
    - Admin: dashboard statistik + kelola postingan, komentar, pengguna
