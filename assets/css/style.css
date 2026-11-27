@@ -79,12 +79,17 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary-light);
 .post-meta b { display: block; font-size: 14px; color: #f8fafc; }
 .post-meta span { color: var(--muted); font-size: 12px; }
 .post-menu { color: var(--text); font-weight: 700; letter-spacing: 1px; background: none; border: none; cursor: pointer; font-size: 16px; }
-.post-media { background: #020617; }
-.post-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
-.post-text-tile { aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 32px; text-align: center; background: linear-gradient(135deg, #3b82f6, #6366f1 60%, #8b5cf6); color: #fff; font-size: 20px; font-weight: 700; line-height: 1.35; }
+.post-media { background: #020617; position: relative; overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.post-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+.post-text-tile { aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 32px; text-align: center; background: linear-gradient(135deg, #3b82f6, #6366f1 60%, #8b5cf6); color: #fff; font-size: 20px; font-weight: 700; line-height: 1.35; position: relative; overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
 .post-text-tile p { white-space: pre-wrap; word-break: break-word; }
 .post-actions { display: flex; gap: 14px; align-items: center; padding: 12px 16px 4px; }
-.post-actions .icon-btn { background: none; border: none; cursor: pointer; padding: 0; line-height: 0; color: #e2e8f0; }
+.post-actions .icon-btn { background: none; border: none; cursor: pointer; padding: 0; line-height: 0; color: #e2e8f0; transition: transform .15s ease; }
+.post-actions .icon-btn:active { transform: scale(1.3); }
+/* Hati besar saat double-tap (ala Instagram). */
+.dbltap-heart { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; pointer-events: none; z-index: 2; animation: heartPop .9s ease forwards; }
+.dbltap-heart svg { width: 100%; height: 100%; filter: drop-shadow(0 4px 14px rgba(0,0,0,.4)); }
+@keyframes heartPop { 0% { transform: scale(0); opacity: 0; } 20% { transform: scale(1.25); opacity: 1; } 40% { transform: scale(1); } 70% { opacity: 1; } 100% { transform: scale(1.1) translateY(-14px); opacity: 0; } }
 .post-actions .icon-btn svg { width: 26px; height: 26px; }
 .post-actions .icon-btn.liked svg { fill: var(--like); stroke: var(--like); }
 .post-actions .action-count { font-size: 14px; font-weight: 700; margin-left: -8px; }

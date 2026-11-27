@@ -112,7 +112,7 @@ include __DIR__ . '/includes/header.php';
 <?php endif; ?>
 
 <?php foreach ($posts as $p): $liked = $user ? userLiked((int)$p['id'], (int)$user['id']) : false; ?>
-  <article class="card">
+  <article class="card" data-post-id="<?= (int)$p['id'] ?>">
     <div class="post-head">
       <a href="profile.php?u=<?= e($p['username']) ?>"><?= avatarHtml($p) ?></a>
       <div class="post-meta">
@@ -125,27 +125,27 @@ include __DIR__ . '/includes/header.php';
     </div>
 
     <?php if ($p['image']): ?>
-      <div class="post-media"><img class="post-img" src="uploads/<?= e($p['image']) ?>" alt="Foto postingan"></div>
+      <div class="post-media" data-like-target><img class="post-img" src="uploads/<?= e($p['image']) ?>" alt="Foto postingan"></div>
     <?php else: ?>
-      <div class="post-text-tile"><p><?= e($p['content']) ?></p></div>
+      <div class="post-text-tile" data-like-target><p><?= e($p['content']) ?></p></div>
     <?php endif; ?>
 
     <div class="post-actions">
       <?php if ($user): ?>
-        <form method="post" action="like.php" style="line-height:0"><input type="hidden" name="post_id" value="<?= (int)$p['id'] ?>">
-          <button class="icon-btn <?= $liked ? 'liked' : '' ?>" type="submit" title="Suka">
+        <form method="post" action="like.php" class="like-form" style="line-height:0"><input type="hidden" name="post_id" value="<?= (int)$p['id'] ?>">
+          <button class="icon-btn <?= $liked ? 'liked' : '' ?>" type="submit" title="Suka" data-like-btn>
             <svg viewBox="0 0 24 24" fill="<?= $liked ? '#ed4956' : 'none' ?>" stroke="<?= $liked ? '#ed4956' : 'currentColor' ?>" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
           </button>
         </form>
       <?php else: ?>
-        <span title="Suka"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>
+        <a href="login.php" title="Masuk untuk menyukai" style="line-height:0"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></a>
       <?php endif; ?>
       <a href="post.php?id=<?= (int)$p['id'] ?>" title="Komentar"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1.1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg></a>
       <a href="post.php?id=<?= (int)$p['id'] ?>" title="Bagikan"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg></a>
     </div>
 
     <div class="post-body">
-      <?php if ((int)$p['like_count'] > 0): ?><div class="post-likes"><?= (int)$p['like_count'] ?> suka</div><?php endif; ?>
+      <div class="post-likes"<?= (int)$p['like_count'] > 0 ? '' : ' hidden' ?>><?= (int)$p['like_count'] ?> suka</div>
       <?php if ($p['image']): ?>
         <div class="post-caption"><b><?= e($p['username']) ?></b><p><?= e($p['content']) ?></p></div>
       <?php endif; ?>
