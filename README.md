@@ -43,7 +43,8 @@ forumjmk48/
 ├── config.php            # koneksi database (UBAH user/pass di sini)
 ├── database.sql          # skema database — import dulu
 ├── seed.php              # JALANKAN SEKALI, lalu HAPUS — bikin akun demo
-├── index.php             # beranda / feed + form buat postingan
+├── index.php             # beranda / feed
+├── create.php            # halaman khusus buat postingan
 ├── login.php  register.php  logout.php
 ├── post.php              # detail postingan + komentar
 ├── edit_post.php  delete_post.php

@@ -8,7 +8,7 @@
   <a href="<?= $base ?? '' ?>search.php" title="Cari" class="bottom-nav-item">
     <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
   </a>
-  <a href="<?= $base ?? '' ?>index.php#composer" title="Buat postingan" class="bottom-nav-item fab">
+  <a href="<?= $base ?? '' ?>create.php" title="Buat postingan" class="bottom-nav-item fab">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
   </a>
   <a href="<?= $base ?? '' ?>activity.php" title="Aktivitas" class="bottom-nav-item">

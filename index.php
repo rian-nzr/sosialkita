@@ -3,24 +3,6 @@ require_once __DIR__ . '/config.php';
 $pageTitle = 'Beranda';
 $user = currentUser();
 
-// --- CREATE post (dari form di beranda) ---
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_post'])) {
-    requireLogin();
-    $content = trim($_POST['content'] ?? '');
-    $error = '';
-    if ($content === '') $error = 'Tulis sesuatu dulu sebelum posting.';
-    elseif (strlen($content) > 2000) $error = 'Postingan maksimal 2000 karakter.';
-    if (!$error) {
-        $image = uploadImage($_FILES['image'] ?? [], $error);
-        if (!$error) {
-            $stmt = $pdo->prepare('INSERT INTO posts (user_id, content, image) VALUES (?,?,?)');
-            $stmt->execute([$user['id'], $content, $image]);
-            flash('Postinganmu sudah tayang! 🎉');
-            redirect('index.php');
-        }
-    }
-}
-
 // --- Ambil semua postingan + info penulis + jumlah like/komentar ---
 // Kalau ada ?q= dari kotak Cari di navbar, filter berdasarkan isi/penulis.
 $searchQ = trim($_GET['q'] ?? '');
@@ -75,26 +57,6 @@ include __DIR__ . '/includes/header.php';
     <?php endforeach; ?>
   </div>
 
-  <div class="card pad" id="composer">
-    <form method="post" enctype="multipart/form-data">
-      <div style="display:flex;gap:10px;align-items:center">
-        <?= avatarHtml($user) ?>
-        <input type="text" name="content" placeholder="Buat postingan baru, <?= e($user['name']) ?>..." required style="border:none;background:transparent;flex:1" maxlength="2000">
-      </div>
-      <?php if (!empty($error)): ?><div class="alert error"><?= e($error) ?></div><?php endif; ?>
-      <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
-        <label style="margin:0;font-weight:400;color:var(--muted);cursor:pointer"><span class="file-label-text">📷 Tambah foto</span> <input type="file" name="image" accept="image/*" style="display:none" data-preview="composer-preview-wrap"></label>
-        <span style="flex:1"></span>
-        <button class="btn btn-primary btn-sm" type="submit" name="create_post">Bagikan</button>
-      </div>
-      <div class="img-preview-wrap" id="composer-preview-wrap" hidden>
-        <img alt="Pratinjau foto">
-        <button type="button" class="img-preview-remove" data-preview-remove title="Batalkan foto">✕</button>
-        <p class="img-preview-note">Pratinjau — foto baru diunggah setelah kamu tekan Bagikan.</p>
-      </div>
-      <p class="muted" style="margin-top:8px">Tulis di kolom atas, tambah foto kalau mau (maks 2 MB). Untuk caption panjang, pakai halaman detail postingan.</p>
-    </form>
-  </div>
 <?php else: ?>
   <div class="card pad" style="text-align:center">
     <h2>Selamat datang di <?= e(APP_NAME) ?> 👋</h2>
